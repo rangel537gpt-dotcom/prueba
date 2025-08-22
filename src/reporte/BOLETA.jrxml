@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="BOLETA" language="groovy" pageWidth="629" pageHeight="434" columnWidth="589" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="10" uuid="bf098b04-30ae-4794-894f-48a2420a6e3a">
+	<property name="ireport.zoom" value="1.771561000000002"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="216"/>
+	<style name="Title" fontName="Arial" fontSize="26" isBold="true" pdfFontName="Helvetica-Bold"/>
+	<style name="SubTitle" forecolor="#666666" fontName="Arial" fontSize="18"/>
+	<style name="Column header" forecolor="#666666" fontName="Arial" fontSize="12" isBold="true"/>
+	<style name="Detail" fontName="Arial" fontSize="12"/>
+	<parameter name="IDDOCUMENTOPAGO" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="TOTALENLETRAS" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="NROCMP" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="CODPAGADOR" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="DIRECCIONPAGADOR" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="NOMBREPAGADOR" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="FECHACMP" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT CPD.DESCRIPCION,DPD.OBSERVACION,DPD.VALORVENTA,DPD.IGV,DPD.CANTIDAD
+FROM DOCUMENTOPAGO DP,DOCUMENTOPAGODET DPD,CONCEPTOPAGODETALLE CPD
+WHERE DP.IDDOCUMENTOPAGO=DPD.IDDOCUMENTOPAGO AND
+DPD.IDCONCEPTOPAGODETALLE=CPD.IDCONCEPTOPAGODETALLE AND
+DP.IDDOCUMENTOPAGO=$P{IDDOCUMENTOPAGO}]]>
+	</queryString>
+	<field name="DESCRIPCION" class="java.lang.String"/>
+	<field name="OBSERVACION" class="java.lang.String"/>
+	<field name="VALORVENTA" class="java.lang.Double"/>
+	<field name="IGV" class="java.lang.Double"/>
+	<field name="CANTIDAD" class="java.lang.Integer"/>
+	<variable name="TOTAL_FILA" class="java.lang.Double">
+		<variableExpression><![CDATA[$F{VALORVENTA}+$F{IGV}]]></variableExpression>
+	</variable>
+	<variable name="TOTAL" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$V{TOTAL_FILA}]]></variableExpression>
+	</variable>
+	<variable name="DESCRIPCION" class="java.lang.String">
+		<variableExpression><![CDATA[$F{DESCRIPCION} + " (" + $F{OBSERVACION} + ")"]]></variableExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="139" splitType="Stretch">
+			<textField>
+				<reportElement x="54" y="72" width="301" height="13" uuid="011e0cb7-2d59-429d-b87a-2fc38645ebf4"/>
+				<textElement>
+					<font fontName="MS Reference Sans Serif" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{NOMBREPAGADOR}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="54" y="85" width="301" height="13" uuid="9447d7e5-42bc-4b13-a84f-742230ef24b9"/>
+				<textElement>
+					<font fontName="MS Reference Sans Serif" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{DIRECCIONPAGADOR}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="54" y="98" width="301" height="13" uuid="11302cad-6bef-48c0-80f1-a8e2d81acc2e"/>
+				<textElement>
+					<font fontName="MS Reference Sans Serif" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{CODPAGADOR}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="272" y="48" width="83" height="13" uuid="e67a8693-9620-44d5-95a4-1900e53e6021"/>
+				<textElement>
+					<font fontName="MS Reference Sans Serif" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{FECHACMP}]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="13" splitType="Stretch">
+			<textField>
+				<reportElement x="13" y="0" width="24" height="13" uuid="073ef959-867d-40b7-9588-91d73c0c3941"/>
+				<textElement textAlignment="Right">
+					<font fontName="MS Reference Sans Serif" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{CANTIDAD}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.00;-###0.00">
+				<reportElement x="497" y="0" width="45" height="13" uuid="10a94fb8-1b51-49bf-9f02-bd26562e569b"/>
+				<textElement textAlignment="Right">
+					<font fontName="MS Reference Sans Serif" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{TOTAL_FILA}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="54" y="0" width="401" height="13" uuid="d08c1990-c76d-4927-ad66-de6fb4dcef83"/>
+				<textElement>
+					<font fontName="MS Reference Sans Serif" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{DESCRIPCION}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="89" splitType="Stretch">
+			<textField>
+				<reportElement x="54" y="1" width="401" height="14" uuid="e1cb88a2-7112-44f0-9bf5-a98e5a7e0640"/>
+				<textElement>
+					<font fontName="MS Reference Sans Serif" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{TOTALENLETRAS}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.00;-###0.00">
+				<reportElement x="497" y="16" width="45" height="13" uuid="dff33709-d1b5-4055-bd32-aa81463735a0"/>
+				<textElement textAlignment="Right">
+					<font fontName="MS Reference Sans Serif" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{TOTAL}]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>
