@@ -1,0 +1,350 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="reporteDiario" language="groovy" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="3b747cf5-4663-43d8-ba5e-867e3db3c1b9">
+	<property name="ireport.zoom" value="1.771561000000001"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="Title" fontName="Arial" fontSize="26" isBold="true" pdfFontName="Helvetica-Bold"/>
+	<style name="SubTitle" forecolor="#666666" fontName="Arial" fontSize="18"/>
+	<style name="Column header" forecolor="#666666" fontName="Arial" fontSize="12" isBold="true"/>
+	<style name="Detail" fontName="Arial" fontSize="12"/>
+	<parameter name="ANIO" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="MES" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="DIA" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["D:\\Proyecto\\Caja Integrado\\reportes\\"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="FECHA" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[WITH CTE AS
+(SELECT DocumentoPago.TipoPago,DocumentoPago.NombreCliente,Serie.Serie,TipoDocPago.NombreDocPago,DocumentoPago.NroDocumentoPago, ConceptoPagoDetalle.Descripcion,ISNULL(DocumentoPagoDet.Observacion,'') AS OBSERVACION,
+DocumentoPagoDet.ValorVenta + DocumentoPagoDet.Igv AS MONTO,
+CASE DocumentoPago.Moneda
+WHEN 'S' THEN 'SOLES'
+WHEN 'D' THEN 'DOLARES'
+END AS Moneda,DocumentoPago.FechaPago,DocumentoPago.IdDocumentoPago
+FROM DocumentoPago,DocumentoPagoDet,ConceptoPagoDetalle,Serie,TipoDocPago,TipoDocSerie
+WHERE DocumentoPago.IdDocumentoPago = DocumentoPagoDet.IdDocumentoPago AND
+DocumentoPago.IdTipoPagoSerie = TipoDocSerie.Id AND
+TipoDocSerie.IdSerie = Serie.IdSerie AND
+TipoDocSerie.IdTipoDoc = TipoDocPago.IdTipoDocPago AND
+DocumentoPagoDet.IdConceptoPagoDetalle = ConceptoPagoDetalle.IdConceptoPagoDetalle AND
+YEAR(DocumentoPago.FechaPago) = $P{ANIO} AND
+MONTH(DocumentoPago.FechaPago) = $P{MES} AND
+DAY(DocumentoPago.FechaPago) = $P{DIA}
+)SELECT *
+FROM cte PIVOT( SUM(MONTO) FOR TipoPago IN (CON,CRE) ) AS pt ORDER BY Moneda,NombreDocPago,Serie,NroDocumentoPago;]]>
+	</queryString>
+	<field name="NombreCliente" class="java.lang.String"/>
+	<field name="Serie" class="java.lang.String"/>
+	<field name="NombreDocPago" class="java.lang.String"/>
+	<field name="NroDocumentoPago" class="java.lang.Integer"/>
+	<field name="Descripcion" class="java.lang.String"/>
+	<field name="OBSERVACION" class="java.lang.String"/>
+	<field name="Moneda" class="java.lang.String"/>
+	<field name="FechaPago" class="java.sql.Date"/>
+	<field name="IdDocumentoPago" class="java.lang.Integer"/>
+	<field name="CON" class="java.lang.Double"/>
+	<field name="CRE" class="java.lang.Double"/>
+	<variable name="MONTO_TOTAL_CONTADO" class="java.lang.Double" resetType="Group" resetGroup="TIPO_DOCUMENTO" calculation="Sum">
+		<variableExpression><![CDATA[$F{CON}]]></variableExpression>
+	</variable>
+	<variable name="MONTO_TOTAL_CREDITO" class="java.lang.Double" resetType="Group" resetGroup="MONEDA" calculation="Sum">
+		<variableExpression><![CDATA[$F{CRE}]]></variableExpression>
+	</variable>
+	<variable name="MONTO_TOTAL_CONTADO_MONEDA" class="java.lang.Double" resetType="Group" resetGroup="MONEDA" calculation="Sum">
+		<variableExpression><![CDATA[$F{CON}]]></variableExpression>
+	</variable>
+	<variable name="MONTO_TOTAL_CREDITO_MONEDA" class="java.lang.Double" resetType="Group" resetGroup="MONEDA" calculation="Sum">
+		<variableExpression><![CDATA[$F{CRE}]]></variableExpression>
+	</variable>
+	<variable name="MONTO_TOTAL_CONTADO_FINAL" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{CON}]]></variableExpression>
+	</variable>
+	<variable name="MONTO_TOTAL_CREDITO_FINAL" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{CRE}]]></variableExpression>
+	</variable>
+	<variable name="FECHA" class="java.lang.String">
+		<variableExpression><![CDATA[$P{DIA} + "/" + $P{MES} + "/" + $P{ANIO}]]></variableExpression>
+	</variable>
+	<variable name="DESCRIPCION" class="java.lang.String">
+		<variableExpression><![CDATA[$F{Descripcion} + " (" + $F{OBSERVACION} + ")"]]></variableExpression>
+	</variable>
+	<variable name="MONTO_TOTAL_SERIE_CONTADO" class="java.lang.Double" resetType="Group" resetGroup="GRUPO_SERIE" calculation="Sum">
+		<variableExpression><![CDATA[$F{CON}]]></variableExpression>
+	</variable>
+	<variable name="MONTO_TOTAL_SERIE_CREDITO" class="java.lang.Double" resetType="Group" resetGroup="GRUPO_SERIE" calculation="Sum">
+		<variableExpression><![CDATA[$F{CRE}]]></variableExpression>
+	</variable>
+	<group name="GRUPO_FECHA_2">
+		<groupExpression><![CDATA[$F{FechaPago}]]></groupExpression>
+	</group>
+	<group name="GRUPO_FECHA">
+		<groupExpression><![CDATA[$F{FechaPago}]]></groupExpression>
+		<groupFooter>
+			<band height="197">
+				<staticText>
+					<reportElement x="0" y="13" width="553" height="20" uuid="7c60fd4e-a9d4-400c-9f99-de10764c8c69"/>
+					<textElement textAlignment="Center">
+						<font isBold="true" isUnderline="true"/>
+					</textElement>
+					<text><![CDATA[RESUMEN]]></text>
+				</staticText>
+				<subreport>
+					<reportElement x="41" y="33" width="457" height="137" uuid="c5afba03-a530-4f4c-8d9b-2e5c87b1da7b"/>
+					<subreportParameter name="anio">
+						<subreportParameterExpression><![CDATA[$P{ANIO}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter name="mes">
+						<subreportParameterExpression><![CDATA[$P{MES}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter name="dia">
+						<subreportParameterExpression><![CDATA[$P{DIA}]]></subreportParameterExpression>
+					</subreportParameter>
+					<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					<subreportExpression><![CDATA["resumenReporteDiario.jasper"]]></subreportExpression>
+				</subreport>
+			</band>
+		</groupFooter>
+	</group>
+	<group name="MONEDA">
+		<groupExpression><![CDATA[$F{Moneda}]]></groupExpression>
+		<groupHeader>
+			<band height="24">
+				<textField>
+					<reportElement x="71" y="5" width="129" height="15" uuid="afd28a91-4c92-4729-a22f-1703802bde4d"/>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{Moneda}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="21" y="5" width="50" height="15" uuid="96258bbc-3b6a-4d81-8600-b41630304a68"/>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[MONEDA:]]></text>
+				</staticText>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="26">
+				<textField pattern="###0.00" isBlankWhenNull="true">
+					<reportElement x="451" y="3" width="47" height="20" uuid="d5c582db-651d-4477-9baf-cd1c55e3c9db"/>
+					<textElement textAlignment="Right">
+						<font size="7" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{MONTO_TOTAL_CONTADO_MONEDA}]]></textFieldExpression>
+				</textField>
+				<textField pattern="###0.00" isBlankWhenNull="true">
+					<reportElement x="498" y="3" width="55" height="20" uuid="db7db707-754d-44ed-ba5b-5efc27b7dfa4"/>
+					<textElement textAlignment="Right">
+						<font size="7" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{MONTO_TOTAL_CREDITO_MONEDA}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="333" y="1" width="119" height="20" uuid="ac56887f-cc8e-4f12-b411-692e86248344"/>
+					<textElement textAlignment="Right">
+						<font size="7" isBold="true"/>
+					</textElement>
+					<text><![CDATA[MONTO TOTAL (TIPO MONEDA)]]></text>
+				</staticText>
+			</band>
+		</groupFooter>
+	</group>
+	<group name="TIPO_DOCUMENTO">
+		<groupExpression><![CDATA[$F{NombreDocPago}]]></groupExpression>
+		<groupHeader>
+			<band height="21">
+				<textField>
+					<reportElement x="136" y="0" width="190" height="20" uuid="ca6db40b-7a2b-48b7-8dca-720617e347b2"/>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{NombreDocPago}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="21" y="0" width="115" height="20" uuid="4aee6e32-c8e3-4c5f-ab37-b3b465abe0ec"/>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[TIPO DE DOCUMENTO:]]></text>
+				</staticText>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="25">
+				<textField pattern="###0.00" isBlankWhenNull="true">
+					<reportElement x="449" y="0" width="49" height="20" uuid="a7e3feb7-1a52-473d-98b2-f52944b1d984"/>
+					<textElement textAlignment="Right">
+						<font size="7" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{MONTO_TOTAL_CONTADO}]]></textFieldExpression>
+				</textField>
+				<textField pattern="###0.00" isBlankWhenNull="true">
+					<reportElement x="498" y="0" width="55" height="20" uuid="c28df183-e428-4392-9386-0a7338be221d"/>
+					<textElement textAlignment="Right">
+						<font size="7" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{MONTO_TOTAL_CREDITO}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="263" y="0" width="186" height="20" uuid="a9eeeb6f-f52c-447a-95b5-3d30dfaacb61"/>
+					<textElement textAlignment="Right" verticalAlignment="Top">
+						<font size="7" isBold="true"/>
+					</textElement>
+					<text><![CDATA[MONTO TOTAL (TIPO DOCUMENTO)]]></text>
+				</staticText>
+			</band>
+		</groupFooter>
+	</group>
+	<group name="GRUPO_SERIE">
+		<groupExpression><![CDATA[$F{Serie}]]></groupExpression>
+		<groupFooter>
+			<band height="21">
+				<staticText>
+					<reportElement x="326" y="0" width="79" height="20" uuid="dde1aa1d-07bb-484b-b774-3aa2ad2b5a44"/>
+					<textElement>
+						<font size="7" isBold="true"/>
+					</textElement>
+					<text><![CDATA[MONTO TOTAL SERIE:]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="405" y="0" width="44" height="20" uuid="16d43e67-c5f7-4e0a-9be0-329b06a487c8"/>
+					<textElement>
+						<font size="7" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{Serie}]]></textFieldExpression>
+				</textField>
+				<textField pattern="###0.00">
+					<reportElement x="449" y="1" width="49" height="20" uuid="75e18ab1-bbf2-43f2-8627-a9ca37bfaef6"/>
+					<textElement textAlignment="Right">
+						<font size="7" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{MONTO_TOTAL_SERIE_CONTADO}]]></textFieldExpression>
+				</textField>
+				<textField pattern="###0.00" isBlankWhenNull="true">
+					<reportElement x="498" y="1" width="55" height="20" uuid="9b86bd20-7ba5-435e-91d9-bd8b96af5442"/>
+					<textElement textAlignment="Right">
+						<font size="7" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{MONTO_TOTAL_SERIE_CREDITO}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupFooter>
+	</group>
+	<group name="GRUPO_ID_DOCUMENTO">
+		<groupExpression><![CDATA[$F{IdDocumentoPago}]]></groupExpression>
+		<groupHeader>
+			<band height="10">
+				<rectangle>
+					<reportElement x="21" y="1" width="532" height="9" backcolor="#F0F0F0" uuid="79806c59-c292-46be-8fbf-292209a01901"/>
+					<graphicElement>
+						<pen lineWidth="0.0"/>
+					</graphicElement>
+				</rectangle>
+				<textField>
+					<reportElement x="24" y="0" width="32" height="10" uuid="153390a9-e9de-47cc-a36d-12f6939375c1"/>
+					<textElement>
+						<font size="7"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{Serie}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="56" y="0" width="33" height="10" uuid="5520157b-c911-48d5-897b-e61c1035c175"/>
+					<textElement>
+						<font size="7"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{NroDocumentoPago}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="89" y="0" width="360" height="10" uuid="80e0fb6c-1a8c-4e81-a7a8-2233a401acf5"/>
+					<textElement>
+						<font size="7"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{NombreCliente}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="70" splitType="Stretch">
+			<staticText>
+				<reportElement style="Title" x="0" y="13" width="553" height="33" uuid="c4e26f24-2c9b-41d6-9cf0-1a8228141b42"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[REPORTE DEL DÍA]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="0" y="46" width="553" height="20" uuid="8a5f3e47-efc3-4caa-87bf-f896061af416"/>
+				<textElement textAlignment="Center">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{FECHA}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<detail>
+		<band height="11" splitType="Stretch">
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="89" y="10" width="466" height="1" uuid="d14ece93-0cdc-406f-84b3-2140b3c17565"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+			<textField pattern="###0.00" isBlankWhenNull="true">
+				<reportElement x="449" y="0" width="49" height="10" uuid="bfa0d717-e293-4a75-8ae4-a3d0c8ab6b0c"/>
+				<textElement textAlignment="Right">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{CON}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.00" isBlankWhenNull="true">
+				<reportElement x="498" y="0" width="55" height="10" uuid="97920bb0-c167-47cc-9a22-5f3f989d21a0"/>
+				<textElement textAlignment="Right">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{CRE}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="89" y="0" width="360" height="10" uuid="1bf1997e-37b3-4552-9649-49ec52057871"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{DESCRIPCION}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="20" splitType="Stretch">
+			<textField>
+				<reportElement style="Column header" x="433" y="0" width="80" height="20" uuid="c2aa9580-9ac8-46ef-b0c8-97f6454ef1d0"/>
+				<textElement textAlignment="Right">
+					<font size="10" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Página "+$V{PAGE_NUMBER}+" de"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement style="Column header" x="513" y="0" width="40" height="20" uuid="f30741c4-f272-4a00-bdd0-ad2647e1c7cf"/>
+				<textElement>
+					<font size="10" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

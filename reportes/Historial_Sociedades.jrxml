@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Historial_Sociedades" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="a3b5f827-5217-4c13-8deb-8c884f8a9c86">
+	<property name="ireport.zoom" value="1.4641000000000006"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="Codigo" class="java.lang.String"/>
+	<parameter name="RUC" class="java.lang.String"/>
+	<parameter name="Nombre_Sociedad" class="java.lang.String"/>
+	<parameter name="IDCLIENTE" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT Cliente.SCodigoSoc, DocumentoPago.IdCliente, DocumentoPago.FechaPago, ConceptoPagoDetalle.TipoCodigo,
+DocumentoPago.NroSerie,
+RIGHT('0000000' + Ltrim(Rtrim(DocumentoPago.NroDocumentoPago)),7) as NroDocumentoPago, Cliente.SRUC,
+DocumentoPago.NombreCliente AS 'Nombre o Razón Social',
+CONCAT (ConceptoPagoDetalle.TipoCodigo, ConceptoPagoDetalle.Codigo) as Evento,
+isnull(ConceptoPagoDetalle.Descripcion,'') + ' ' + isnull(DocumentoPagoDet.Observacion,'') AS Descripcion,
+DocumentoPagoDet.Cantidad, DocumentoPagoDet.ValorVenta + DocumentoPagoDet.Igv AS Importe
+--from DocumentoPago, ConceptoPagoDetalle, Cliente, DocumentoPagoDet
+from DocumentoPago inner join DocumentoPagoDet ON DocumentoPago.IdDocumentoPago = DocumentoPagoDet.IdDocumentoPago
+INNER JOIN ConceptoPagoDetalle ON ConceptoPagoDetalle.IdConceptoPagoDetalle = DocumentoPagoDet.IdConceptoPagoDetalle
+INNER JOIN Cliente ON Cliente.IdCliente = DocumentoPago.IdCliente
+where DocumentoPagoDet.ValorVenta + DocumentoPagoDet.Igv <> 0
+and Cliente.idCliente = $P{IDCLIENTE}
+order by DocumentoPago.FechaPago, DocumentoPago.NroSerie]]>
+	</queryString>
+	<field name="SCodigoSoc" class="java.lang.String"/>
+	<field name="IdCliente" class="java.lang.Integer"/>
+	<field name="FechaPago" class="java.sql.Date"/>
+	<field name="TipoCodigo" class="java.lang.String"/>
+	<field name="NroSerie" class="java.lang.String"/>
+	<field name="NroDocumentoPago" class="java.lang.String"/>
+	<field name="SRUC" class="java.lang.String"/>
+	<field name="Nombre o Razón Social" class="java.lang.String"/>
+	<field name="Evento" class="java.lang.String"/>
+	<field name="Descripcion" class="java.lang.String"/>
+	<field name="Cantidad" class="java.lang.Integer"/>
+	<field name="Importe" class="java.lang.Double"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="74" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="218" height="20" uuid="668dcaea-f8ea-451d-9fb9-bf5236b1b904"/>
+				<textElement>
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[COLEGIO DE CONTADORES PÚBLICOS DE AREQUIPA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="200" y="33" width="168" height="20" uuid="e79202bb-7616-483f-9d0e-b3268eb7b8ac"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Relación de Movimientos]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="200" y="54" width="48" height="20" uuid="52284812-4fb0-4a68-b3c8-a44299ffedca"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Sociedad:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="248" y="54" width="307" height="20" uuid="b4dde37f-9f03-47ed-ade8-476fb7ea7a22"/>
+				<textElement>
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Nombre o Razón Social}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="53" width="28" height="20" uuid="267f2d47-80aa-456f-9999-1e1448cd0159"/>
+				<textElement>
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[RUC]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="105" y="54" width="40" height="20" uuid="a73199eb-5fc0-4890-88bb-733e7fd85477"/>
+				<text><![CDATA[Código:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="145" y="53" width="39" height="20" uuid="18867cc9-d7a6-4ce8-b671-1cd3aaa1e0d8"/>
+				<textFieldExpression><![CDATA[$P{Codigo}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="28" y="53" width="56" height="20" uuid="faa81f21-3d65-4db8-a7ef-25a3711452eb"/>
+				<textFieldExpression><![CDATA[$P{RUC}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="23" splitType="Stretch">
+			<staticText>
+				<reportElement x="11" y="0" width="33" height="20" uuid="bb8b7d3f-0196-4d76-9a39-91711d786868"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Fecha]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="60" y="0" width="24" height="20" uuid="8c1beff1-54b9-4489-839a-6a25f532a542"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Serie]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="91" y="0" width="37" height="20" uuid="e0bb901e-89d0-41a6-ac3f-3826eb841bab"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Documento]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="138" y="0" width="33" height="20" uuid="a84794e7-a10f-4474-9bb7-063bdd9da584"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Evento]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="187" y="2" width="195" height="18" uuid="e756fbc8-722f-49f1-a379-51241014475f"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Descripción]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="463" y="0" width="31" height="20" uuid="f42f77f4-c438-493e-9ade-87baa9b0dd07"/>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Cant.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="511" y="2" width="39" height="18" uuid="7f8c8aa7-0e7e-4dd7-8fb0-3c4e2bf93eb3"/>
+				<textElement textAlignment="Right">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Importe]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="21" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="60" height="20" uuid="e569f8c3-9ae0-41b4-a423-ece5ba2f3840"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{FechaPago}.toString()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="60" y="1" width="24" height="20" uuid="c90085bf-7c7d-4b15-aa35-8def8739d8f3"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{NroSerie}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="91" y="0" width="37" height="20" uuid="fd1cf7a7-4b43-4e2d-8b5a-794b6b89986b"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{NroDocumentoPago}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="138" y="0" width="33" height="20" uuid="02fce4a8-679c-4396-9793-1abd84b9bcaf"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Evento}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="188" y="0" width="253" height="20" uuid="7660c657-c20e-4735-b65f-41a3c2f296c6"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Descripcion}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="463" y="1" width="31" height="20" uuid="72ba82d5-68eb-4773-a923-29ed4e77277f"/>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Cantidad}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement x="509" y="0" width="41" height="20" uuid="500c0862-2585-4aef-8543-c4ad42910d10"/>
+				<textElement textAlignment="Right">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Importe}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

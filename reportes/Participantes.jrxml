@@ -1,0 +1,295 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Alumnos_Nuevos" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="39925f74-b200-418d-a39e-3dbbf177697e">
+	<property name="ireport.zoom" value="1.9487171000000014"/>
+	<property name="ireport.x" value="157"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="Fecha_inicio" class="java.lang.String"/>
+	<parameter name="Fecha_fin" class="java.lang.String"/>
+	<parameter name="IDEVENTO" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select distinct
+e.codigo + ' - ' + e.nombre as nombreEvento,
+case
+when cl.TipoCliente = 'P' then cl.PNroDocumento
+else ''
+end as dni,
+case
+when cl.TipoCliente = 'C' then cl.CCodigoCole
+else ''
+end as codigo,
+cl.PApePat + ' ' + cl.PApeMat + ' ' + cl.PNombre as nombre,
+dp.NroSerie + '-'  + RIGHT('0000000' + Ltrim(Rtrim(dp.NroDocumentoPago)),7) as nro,
+dp.FechaPago,
+dp.tipoPago,
+isnull(td.CodigoDocPago,'') as codigoDocPago,
+((dpd.igv + dpd.valorVenta) / NULLIF(dpd.cantidad, 0)) as monto,
+tp.nombre as tipoParticipante
+from cursos.participante p,dbo.DocumentoPagoDet dpd,dbo.DocumentoPago dp,dbo.Cliente cl,dbo.TipoDocSerie tds,TipoDocPago td,cursos.evento e,cursos.inversion inv,cursos.tipo_participante tp
+where p.id_documento_pago_det = dpd.IdDocumentoPagoDet and
+dpd.IdDocumentoPago = dp.IdDocumentoPago and
+p.id_cliente = cl.IdCliente and
+dp.IdTipoPagoSerie = tds.Id and
+tds.IdTipoDoc = td.IdTipoDocPago and
+p.id_evento = e.id and
+e.id = $P{IDEVENTO} and
+dp.fechaPago >= $P{Fecha_inicio} and
+dp.fechaPago <= $P{Fecha_fin} and
+e.borrado = '1' and
+p.borrado = '1' and
+p.id_inversion = inv.id and
+inv.id_tipo_participante = tp.id
+
+union all
+
+select e.codigo + ' - ' + e.nombre as nombreEvento,'' as dni,c.CCodigoCole as codigo,c.PApePat + ' ' + c.PApeMat + ' ' + c.PNombre as nombre,'' as nro,''  as FechaPago, '' as tipoPago,'' as codigoDocPago,0 as monto,'' as tipoParticipante
+from dbo.vale_academico va,dbo.vale_academico_consumo vac,cursos.inversion i,dbo.DocumentoPagoDet dpd,dbo.DocumentoPago dp,dbo.Cliente c,cursos.evento e
+where dp.IdCliente = c.IdCliente and
+dp.IdDocumentoPago = dpd.IdDocumentoPago and
+va.id_documento_pago_detalle = dpd.IdDocumentoPagoDet and
+va.id = vac.id_vale_academico and
+vac.id_inversion = i.id and
+i.id_evento = e.id and
+vac.borrado = '1' and
+va.borrado = '1' and
+dp.IdContadorEmpresa is null and
+i.id_evento = $P{IDEVENTO}
+
+union all
+
+select e.codigo + ' - ' + e.nombre as nombreEvento,'' as dni,c.CCodigoCole as codigo,c.PApePat + ' ' + c.PApeMat + ' ' + c.PNombre as nombre,'' as nro,''  as FechaPago, '' as tipoPago,'' as codigoDocPago,0 as monto,'' as tipoParticipante
+from dbo.vale_academico va,dbo.vale_academico_consumo vac,cursos.inversion i,dbo.DocumentoPagoDet dpd,dbo.DocumentoPago dp,dbo.Cliente c,cursos.evento e
+where dp.IdContadorEmpresa = c.IdCliente and
+dp.IdDocumentoPago = dpd.IdDocumentoPago and
+va.id_documento_pago_detalle = dpd.IdDocumentoPagoDet and
+va.id = vac.id_vale_academico and
+vac.id_inversion = i.id and
+i.id_evento = e.id and
+vac.borrado = '1' and
+va.borrado = '1' and
+dp.IdContadorEmpresa is not null and
+i.id_evento = $P{IDEVENTO}
+
+order by dp.FechaPago DESC;]]>
+	</queryString>
+	<field name="nombreEvento" class="java.lang.String"/>
+	<field name="dni" class="java.lang.String"/>
+	<field name="codigo" class="java.lang.String"/>
+	<field name="nombre" class="java.lang.String"/>
+	<field name="nro" class="java.lang.String"/>
+	<field name="FechaPago" class="java.sql.Date"/>
+	<field name="tipoPago" class="java.lang.String"/>
+	<field name="codigoDocPago" class="java.lang.String"/>
+	<field name="monto" class="java.lang.Double"/>
+	<field name="tipoParticipante" class="java.lang.String"/>
+	<variable name="CONTADOR" class="java.math.BigDecimal">
+		<variableExpression><![CDATA[$V{CONTADOR}.add(new BigDecimal(1))]]></variableExpression>
+		<initialValueExpression><![CDATA[new BigDecimal(0)]]></initialValueExpression>
+	</variable>
+	<variable name="CONTADO" class="java.lang.Double">
+		<variableExpression><![CDATA[$F{tipoPago}.equals("CON") ? $F{monto} : new BigDecimal(0)]]></variableExpression>
+	</variable>
+	<variable name="CREDITO" class="java.lang.Double">
+		<variableExpression><![CDATA[$F{tipoPago}.equals("CRE") ? $F{monto} : new BigDecimal(0)]]></variableExpression>
+	</variable>
+	<variable name="TOTAL_CONTADO" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$V{CONTADO}]]></variableExpression>
+	</variable>
+	<variable name="TOTAL_CREDITO" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$V{CREDITO}]]></variableExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="80" splitType="Stretch">
+			<staticText>
+				<reportElement x="4" y="3" width="243" height="20" uuid="8cc76cc9-f7a5-4c21-8aae-fad19994a069"/>
+				<textElement>
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[COLEGIO DE CONTADORES PÚBLICOS DE AREQUIPA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="21" y="60" width="39" height="20" uuid="64094bc0-8509-42e0-932e-35fb7adfaef3"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Evento:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="145" y="27" width="247" height="20" uuid="338bc8d5-9fc3-43a5-ab4d-f18f4d7420ed"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[REPORTE DE ALUMNOS INSCRITOS EN CURSOS]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="60" y="60" width="491" height="20" uuid="598f643d-f0ab-44e1-baaf-11c9e4acb984"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nombreEvento}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="9" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="22" splitType="Stretch">
+			<staticText>
+				<reportElement x="28" y="0" width="61" height="20" uuid="444e647b-b437-4a76-9126-aa85488c2ccd"/>
+				<textElement>
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[N° Doc]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="93" y="0" width="41" height="20" uuid="723405bb-0eb3-41a9-a7da-611a7e951b12"/>
+				<textElement>
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Fecha]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="139" y="0" width="42" height="20" uuid="1aebdd53-ee0a-4782-ad86-b6567de378a2"/>
+				<textElement>
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[D.N.I.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="262" y="0" width="88" height="20" uuid="c548a14e-6682-4001-b55f-c556428d1d6a"/>
+				<textElement>
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nombre del Participante]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="3" y="0" width="18" height="20" uuid="09536070-abbc-413d-8e7e-70aa9a0cae02"/>
+				<textElement>
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[N°]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="185" y="0" width="36" height="20" uuid="8772f43e-f164-437a-81cf-cff73b9ed7bc"/>
+				<textElement>
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Código]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="452" y="0" width="47" height="20" uuid="6e0897fe-4f37-4df3-80c9-402d8e19ca4b"/>
+				<textElement textAlignment="Right">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Contado]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="504" y="0" width="47" height="20" uuid="d6f8a0d2-b62d-4c4b-b256-97af321d474c"/>
+				<textElement textAlignment="Right">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Crédito]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="224" y="0" width="34" height="20" uuid="173ad45a-91b7-4120-b2e9-9cf50e1e644e"/>
+				<text><![CDATA[T. Par.]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="22" splitType="Stretch">
+			<textField>
+				<reportElement x="28" y="0" width="61" height="20" uuid="81658259-e0e3-4622-a3f8-ab4f8053dd5f"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nro}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="93" y="0" width="41" height="20" uuid="93bd0361-5fef-46d2-9fdc-b9552fe60033"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{FechaPago}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="139" y="0" width="42" height="20" uuid="7d2db988-7b68-4fdc-8be6-9cdca9698705"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{dni}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="262" y="0" width="187" height="20" uuid="f794faea-c4d4-48ae-8392-fca24181ba3f"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nombre}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="185" y="0" width="36" height="20" uuid="4b9646d9-3b63-448a-b1a6-c085e86a73c8"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{codigo}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="4" y="0" width="17" height="20" uuid="3377ca6c-87ec-435f-89c4-f769e2313fe5"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{CONTADOR}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement x="452" y="0" width="47" height="20" uuid="1d2242f8-f56e-4f9e-b45f-3ad3c90c0600"/>
+				<textElement textAlignment="Right">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{CONTADO}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement x="504" y="0" width="47" height="20" uuid="621a2e6b-294e-4f3c-a2af-ab1f3115f856"/>
+				<textElement textAlignment="Right">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{CREDITO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="224" y="0" width="34" height="20" uuid="9080342e-c7b2-4074-975b-b518c2e7a4dc"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{tipoParticipante}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="10" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch">
+			<staticText>
+				<reportElement x="401" y="0" width="48" height="20" uuid="9c7270cb-f6bb-4be9-bc58-252ee7c05057"/>
+				<textElement>
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[TOTALES]]></text>
+			</staticText>
+			<textField pattern="#,##0.00">
+				<reportElement x="452" y="0" width="47" height="20" uuid="9c3b9340-660b-41be-839b-104d58a35106"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$V{TOTAL_CONTADO}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement x="504" y="0" width="47" height="20" uuid="5f24b55f-0b14-4703-8306-97fb0a93d981"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$V{TOTAL_CREDITO}]]></textFieldExpression>
+			</textField>
+		</band>
+	</summary>
+</jasperReport>

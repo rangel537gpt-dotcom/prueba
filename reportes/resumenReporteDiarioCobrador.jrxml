@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="resumenReporteDiario" language="groovy" pageWidth="555" pageHeight="802" columnWidth="535" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="ecd8fd9c-af10-4c79-96e0-716214e6ac10">
+	<property name="ireport.zoom" value="2.853116706110003"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="Title" fontName="Arial" fontSize="26" isBold="true" pdfFontName="Helvetica-Bold"/>
+	<style name="SubTitle" forecolor="#666666" fontName="Arial" fontSize="18"/>
+	<style name="Column header" forecolor="#666666" fontName="Arial" fontSize="12" isBold="true"/>
+	<style name="Detail" fontName="Arial" fontSize="12"/>
+	<parameter name="anio" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="mes" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="dia" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="IDCOBRADOR" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[WITH CTE AS
+(SELECT DocumentoPago.TipoPago,ConceptoPagoDetalle.Descripcion,
+DocumentoPagoDet.ValorVenta + DocumentoPagoDet.Igv AS MONTO,
+CASE DocumentoPago.Moneda
+WHEN 'S' THEN 'SOLES'
+WHEN 'D' THEN 'DOLARES'
+END AS Moneda
+FROM DocumentoPago,DocumentoPagoDet,ConceptoPagoDetalle
+WHERE DocumentoPago.IdDocumentoPago = DocumentoPagoDet.IdDocumentoPago AND
+DocumentoPagoDet.IdConceptoPagoDetalle = ConceptoPagoDetalle.IdConceptoPagoDetalle AND
+YEAR(DocumentoPago.FechaPago) = $P{anio} AND
+MONTH(DocumentoPago.FechaPago) = $P{mes} AND
+DAY(DocumentoPago.FechaPago) = $P{dia} AND
+DocumentoPago.ESTADO = 'C' AND
+DocumentoPago.IdCobrador = $P{IDCOBRADOR}
+
+UNION ALL
+
+SELECT 'CON',ConceptoPagoDetalle.Descripcion,
+(NotaDetalle.ValorVenta + NotaDetalle.Igv) * Nota.Tipo * -1 AS MONTO,
+CASE Nota.Moneda
+WHEN 'S' THEN 'SOLES'
+WHEN 'D' THEN 'DOLARES'
+END AS Moneda
+FROM DocumentoPago,DocumentoPagoDet,ConceptoPagoDetalle,Nota,NotaDetalle
+WHERE
+Nota.Id = NotaDetalle.IdNota AND
+Nota.IdDocumentoPago = DocumentoPago.IdDocumentoPago AND
+NotaDetalle.IdDocumentoPagoDet = DocumentoPagoDet.IdDocumentoPagoDet AND
+DocumentoPago.IdDocumentoPago = DocumentoPagoDet.IdDocumentoPago AND
+DocumentoPagoDet.IdConceptoPagoDetalle = ConceptoPagoDetalle.IdConceptoPagoDetalle AND
+YEAR(Nota.Fecha) = $P{anio} AND
+MONTH(Nota.Fecha) = $P{mes} AND
+DAY(Nota.Fecha) = $P{dia}
+
+
+)SELECT *
+FROM cte PIVOT( SUM(MONTO) FOR TipoPago IN (CON,CRE) ) AS pt;]]>
+	</queryString>
+	<field name="Descripcion" class="java.lang.String"/>
+	<field name="Moneda" class="java.lang.String"/>
+	<field name="CON" class="java.lang.Double"/>
+	<field name="CRE" class="java.lang.Double"/>
+	<variable name="MONTO_TOTAL_CONTADO" class="java.lang.Double" resetType="Group" resetGroup="GRUPO_MONEDA" calculation="Sum">
+		<variableExpression><![CDATA[$F{CON}]]></variableExpression>
+	</variable>
+	<variable name="MONTO_TOTAL_CREDITO" class="java.lang.Double" resetType="Group" resetGroup="GRUPO_MONEDA" calculation="Sum">
+		<variableExpression><![CDATA[$F{CRE}]]></variableExpression>
+	</variable>
+	<group name="GRUPO_MONEDA">
+		<groupExpression><![CDATA[$F{Moneda}]]></groupExpression>
+		<groupHeader>
+			<band height="21">
+				<textField>
+					<reportElement x="81" y="1" width="89" height="19" uuid="22d8b654-8b67-4173-a571-91d34f92fbbe"/>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{Moneda}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="263" y="1" width="65" height="20" uuid="f11be59d-b882-4bda-adbe-1423be800065"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font size="8" isBold="true" isUnderline="true"/>
+					</textElement>
+					<text><![CDATA[CONTADO]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="363" y="1" width="65" height="20" uuid="480f4f05-f262-4ce6-8866-a47969f46cba"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font size="8" isBold="true" isUnderline="true"/>
+					</textElement>
+					<text><![CDATA[CREDITO]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="24" y="1" width="57" height="20" uuid="09adad8f-29f8-4646-9914-6d3a41b4cd0b"/>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[MONEDA:]]></text>
+				</staticText>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="20">
+				<textField pattern="###0.00" isBlankWhenNull="true">
+					<reportElement x="263" y="0" width="65" height="16" uuid="54f30b0f-7515-4ffa-8cda-10c3d716ad09"/>
+					<textElement textAlignment="Right">
+						<font size="8" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{MONTO_TOTAL_CONTADO}]]></textFieldExpression>
+				</textField>
+				<textField pattern="###0.00" isBlankWhenNull="true">
+					<reportElement x="363" y="0" width="65" height="16" uuid="4d796b39-97c3-48f6-8baa-e17828c7bbae"/>
+					<textElement textAlignment="Right">
+						<font size="8" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{MONTO_TOTAL_CREDITO}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="163" y="0" width="100" height="16" uuid="072e1d74-5551-415d-a843-426dbc08d906"/>
+					<textElement textAlignment="Center">
+						<font size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[TOTALES:]]></text>
+				</staticText>
+			</band>
+		</groupFooter>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<detail>
+		<band height="16" splitType="Stretch">
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="15" width="428" height="1" uuid="be1fd201-762c-4875-9492-82a140c66820"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+			<textField>
+				<reportElement x="23" y="0" width="240" height="15" uuid="ddd9b3f4-d159-4805-9f71-9523cfaef3af"/>
+				<textElement>
+					<font size="8" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Descripcion}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.00" isBlankWhenNull="true">
+				<reportElement x="263" y="0" width="65" height="15" uuid="75d560d5-0108-4914-afed-b1fbb9136636"/>
+				<textElement textAlignment="Right">
+					<font size="8" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{CON}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.00" isBlankWhenNull="true">
+				<reportElement x="363" y="0" width="65" height="15" uuid="a66d518c-2bde-4dd1-a650-174658ab28a0"/>
+				<textElement textAlignment="Right">
+					<font size="8" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{CRE}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

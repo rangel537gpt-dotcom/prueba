@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="cobrador" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="ca14f3ba-dbe0-4ef0-8ff9-80f392f1aaa5">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="Cobrador" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[EXEC Cobradores $P{Cobrador}]]>
+	</queryString>
+	<field name="IdCliente" class="java.lang.Integer"/>
+	<field name="CCodigoCole" class="java.lang.String"/>
+	<field name="Nombre o Razón Social" class="java.lang.String"/>
+	<field name="Dirección Domicilio" class="java.lang.String"/>
+	<field name="Dirección Trabajo" class="java.lang.String"/>
+	<field name="Tel.Domicilio" class="java.lang.String"/>
+	<field name="Tel.Trabajo" class="java.lang.String"/>
+	<field name="Mes" class="java.lang.Integer"/>
+	<field name="Anio" class="java.lang.Integer"/>
+	<field name="MontoCuota" class="java.lang.Double"/>
+	<field name="NroOrden" class="java.lang.Integer"/>
+	<field name="Fecha" class="java.sql.Timestamp"/>
+	<field name="Nombre Cobrador" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch">
+			<staticText>
+				<reportElement x="13" y="0" width="253" height="20" uuid="e49cef52-672c-446f-bf02-77cda4cc92a6"/>
+				<textElement>
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[COLEGIO DE CONTADORES PÚBLICOS DE AREQUIPA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="166" y="33" width="204" height="20" uuid="f525ef35-b834-44f2-a113-2c15f56c58d8"/>
+				<text><![CDATA[RESUMEN DE CUENTAS POR COBRAR]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="166" y="53" width="65" height="20" uuid="2f49b3e6-9091-4f2f-bfa9-1627becf2f3b"/>
+				<text><![CDATA[COBRADOR:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="231" y="53" width="196" height="20" uuid="90afd68f-b47a-4473-920a-3c3fdbaec8a1"/>
+				<textFieldExpression><![CDATA[$F{Nombre Cobrador}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="14" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="23" splitType="Stretch">
+			<staticText>
+				<reportElement x="514" y="2" width="32" height="20" uuid="5835b517-13f0-4e10-be5d-b4ce15276edb"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Fecha]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="-1" y="2" width="29" height="20" uuid="59d91a98-989e-4cdd-b032-d171d8a0e2e2"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Código]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="34" y="3" width="93" height="20" uuid="d3723594-054f-470d-9c84-fc3b67715671"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Nombre o Razón Social]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="157" y="3" width="100" height="20" uuid="d0656844-629a-4fd7-bb67-bc0f6e5a7108"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Dirección Domicilio]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="275" y="2" width="100" height="20" uuid="c7cfce81-9eba-4e84-9191-c031be43c67c"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Dirección Trabajo]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="393" y="2" width="42" height="20" uuid="78fcb7b5-7e38-4e9c-b147-a24760198a1a"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Tel.Domic.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="458" y="2" width="33" height="20" uuid="8d4fa79c-bbff-491c-9f6f-08380d176045"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Tel.Trab.]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="43" splitType="Stretch">
+			<textField pattern="MMM - yyyy">
+				<reportElement x="511" y="0" width="41" height="20" uuid="eb5f8fd2-627a-4752-b727-2434cae54c6b"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Fecha}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="31" y="0" width="122" height="42" uuid="4a218287-64e1-4112-b1a0-8de59476fcaa"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Nombre o Razón Social}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="157" y="0" width="111" height="42" uuid="8f26cf68-0ef7-40fb-8bb6-66613ee7f88f"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Dirección Domicilio}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="274" y="1" width="112" height="42" uuid="59cfcb1a-0f63-4610-9133-dc1ee2cf3184"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Dirección Trabajo}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="395" y="0" width="52" height="42" uuid="5e106468-87c7-42ba-aa14-d79962ab6dca"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Tel.Domicilio}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="458" y="0" width="44" height="42" uuid="dd34559d-843f-4a2c-93bc-fde9780f52d0"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Tel.Trabajo}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="0" width="29" height="20" uuid="6e4c12e3-c7ff-420b-aa0a-9e5b2d3ed098"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{CCodigoCole}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

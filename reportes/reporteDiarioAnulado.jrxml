@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="resumenReporteDiario" language="groovy" pageWidth="555" pageHeight="802" columnWidth="535" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="ecd8fd9c-af10-4c79-96e0-716214e6ac10">
+	<property name="ireport.zoom" value="1.7715610000000017"/>
+	<property name="ireport.x" value="223"/>
+	<property name="ireport.y" value="0"/>
+	<style name="Title" fontName="Arial" fontSize="26" isBold="true" pdfFontName="Helvetica-Bold"/>
+	<style name="SubTitle" forecolor="#666666" fontName="Arial" fontSize="18"/>
+	<style name="Column header" forecolor="#666666" fontName="Arial" fontSize="12" isBold="true"/>
+	<style name="Detail" fontName="Arial" fontSize="12"/>
+	<parameter name="ANIO" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="MES" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="DIA" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT DocumentoPago.TipoPago,Serie.Serie,TipoDocPago.NombreDocPago,DocumentoPago.NroDocumentoPago,DocumentoPago.Moneda,DocumentoPago.FechaPago
+FROM DocumentoPago,Serie,TipoDocPago,TipoDocSerie
+WHERE DocumentoPago.IdTipoPagoSerie = TipoDocSerie.Id AND
+TipoDocSerie.IdSerie = Serie.IdSerie AND
+TipoDocSerie.IdTipoDoc = TipoDocPago.IdTipoDocPago AND
+YEAR(DocumentoPago.FechaPago) = $P{ANIO} AND
+MONTH(DocumentoPago.FechaPago) = $P{MES} AND
+DAY(DocumentoPago.FechaPago) = $P{DIA} AND
+DocumentoPago.ESTADO='ANULADO'
+ORDER BY TipoDocPago.NombreDocPago,Serie.Serie,DocumentoPago.NroDocumentoPago]]>
+	</queryString>
+	<field name="TipoPago" class="java.lang.String"/>
+	<field name="Serie" class="java.lang.String"/>
+	<field name="NombreDocPago" class="java.lang.String"/>
+	<field name="NroDocumentoPago" class="java.lang.Integer"/>
+	<field name="Moneda" class="java.lang.String"/>
+	<field name="FechaPago" class="java.sql.Date"/>
+	<group name="GRUPO_MONEDA">
+		<groupExpression><![CDATA[$F{Moneda}]]></groupExpression>
+		<groupHeader>
+			<band height="21">
+				<staticText>
+					<reportElement x="45" y="1" width="72" height="20" uuid="85e5d621-4e19-4e0b-83d3-5e99400dc778"/>
+					<textElement verticalAlignment="Middle">
+						<font size="8" isBold="true" isUnderline="true"/>
+					</textElement>
+					<text><![CDATA[DOC. PAGO]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="119" y="1" width="44" height="20" uuid="93a850a4-9ae1-4382-95c3-6288b6d0ec1c"/>
+					<textElement verticalAlignment="Middle">
+						<font size="8" isBold="true" isUnderline="true"/>
+					</textElement>
+					<text><![CDATA[SERIE]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="163" y="1" width="50" height="20" uuid="4e7956a8-8321-4874-b426-5b5a89bb9d92"/>
+					<textElement verticalAlignment="Middle">
+						<font size="8" isBold="true" isUnderline="true"/>
+					</textElement>
+					<text><![CDATA[NRO]]></text>
+				</staticText>
+			</band>
+		</groupHeader>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<detail>
+		<band height="16" splitType="Stretch">
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="15" width="256" height="1" uuid="be1fd201-762c-4875-9492-82a140c66820"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+			<textField>
+				<reportElement x="45" y="0" width="72" height="15" uuid="4772dc83-7985-4eb9-88b3-f3b2cb6fb481"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{NombreDocPago}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="119" y="0" width="44" height="16" uuid="f4f0b94c-edf6-466d-aad7-cff87213c406"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Serie}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="163" y="1" width="50" height="15" uuid="482873d5-c5c3-4bc1-8ab5-6eb77814f7bb"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{NroDocumentoPago}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Historial_Persona" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="831b2f32-86e2-484c-b411-1f4676f95800">
+	<property name="ireport.zoom" value="1.3310000000000004"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="DNI" class="java.lang.String"/>
+	<parameter name="Nombre_persona" class="java.lang.String"/>
+	<parameter name="IDCLIENTE" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT DocumentoPago.FechaPago, ConceptoPagoDetalle.TipoCodigo, DocumentoPago.NroSerie,
+RIGHT('0000000' + Ltrim(Rtrim(DocumentoPago.NroDocumentoPago)),7) as NroDocumentoPago,
+Cliente.PNroDocumento, DocumentoPago.NombreCliente AS 'Nombre o Razón Social',
+CONCAT (ConceptoPagoDetalle.TipoCodigo, ConceptoPagoDetalle.Codigo) as Evento,
+isnull(ConceptoPagoDetalle.Descripcion,'') + ' ' + isnull(DocumentoPagoDet.Observacion,'') AS Descripcion,
+DocumentoPagoDet.Cantidad, DocumentoPagoDet.ValorVenta + DocumentoPagoDet.Igv AS Importe
+from DocumentoPago inner join DocumentoPagoDet ON DocumentoPago.IdDocumentoPago = DocumentoPagoDet.IdDocumentoPago
+INNER JOIN ConceptoPagoDetalle ON ConceptoPagoDetalle.IdConceptoPagoDetalle = DocumentoPagoDet.IdConceptoPagoDetalle
+INNER JOIN Cliente ON Cliente.IdCliente = DocumentoPago.IdCliente
+and Cliente.idcliente = $P{IDCLIENTE}
+and Cliente.PNroDocumento <> '00000000'
+where DocumentoPagoDet.ValorVenta + DocumentoPagoDet.Igv <> 0
+order by DocumentoPago.FechaPago, DocumentoPago.NroSerie]]>
+	</queryString>
+	<field name="FechaPago" class="java.sql.Date"/>
+	<field name="TipoCodigo" class="java.lang.String"/>
+	<field name="NroSerie" class="java.lang.String"/>
+	<field name="NroDocumentoPago" class="java.lang.String"/>
+	<field name="PNroDocumento" class="java.lang.String"/>
+	<field name="Nombre o Razón Social" class="java.lang.String"/>
+	<field name="Evento" class="java.lang.String"/>
+	<field name="Descripcion" class="java.lang.String"/>
+	<field name="Cantidad" class="java.lang.Integer"/>
+	<field name="Importe" class="java.lang.Double"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="253" height="20" uuid="ec547b26-c7e2-4095-81b6-a05fd1f57e53"/>
+				<textElement>
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[COLEGIO DE CONTADORES PÚBLICOS DE AREQUIPA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="218" y="32" width="132" height="20" uuid="e893d44c-7384-40e0-a6d4-31bf018452b6"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Relación de Movimientos]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="121" y="52" width="58" height="20" uuid="78723a43-0e95-414c-926a-a61ba68b01e0"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Persona:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="179" y="52" width="305" height="20" uuid="b880fc90-6695-498d-b893-2babecc25f4c"/>
+				<textElement>
+					<font size="10" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Nombre o Razón Social}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="13" y="52" width="41" height="20" uuid="4502040e-da70-4364-b011-c2b03490a28f"/>
+				<textElement>
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[DNI]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="54" y="52" width="51" height="20" uuid="255aa575-02bc-45e4-a5fa-78bfb8a19f11"/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{PNroDocumento}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="20" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="54" height="20" uuid="a6a015c6-38f1-45af-b730-9f6678da0aa9"/>
+				<textElement>
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Fecha]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="65" y="0" width="30" height="20" uuid="9d38c461-0522-4829-8841-1c42fee458e3"/>
+				<textElement>
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Serie]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="105" y="0" width="49" height="20" uuid="409b482d-8d93-4ad7-b8f2-695ad44975dc"/>
+				<textElement>
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Documento]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="169" y="0" width="43" height="20" uuid="9b58551a-6617-4042-9d08-8e0b266ec6e9"/>
+				<textElement>
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Evento]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="218" y="0" width="230" height="20" uuid="61817325-1a23-4190-88d2-c61f8de628bd"/>
+				<textElement>
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Descripción]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="455" y="0" width="29" height="20" uuid="5d87b8bc-21e6-4c96-b11c-140520a9f6a6"/>
+				<textElement textAlignment="Center">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Cant.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="507" y="0" width="42" height="20" uuid="6ca32961-0bb7-4948-bb69-a306c00d7410"/>
+				<textElement textAlignment="Right">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Importe]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="21" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="54" height="20" uuid="3d6da5a5-0282-4dc2-9b33-cd2d622f5d21"/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{FechaPago}.toString()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="65" y="0" width="30" height="20" uuid="eb71349e-96b2-47e3-b373-ac868a6f6486"/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{NroSerie}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="105" y="0" width="49" height="20" uuid="f4c49bc9-93f7-47fc-9e12-1c07e9740bf6"/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{NroDocumentoPago}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="169" y="0" width="43" height="20" uuid="1c93afed-2e87-43ca-9ed0-7e08a1c6ebcd"/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Evento}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="218" y="0" width="230" height="20" uuid="dd73eaf9-ce2e-499f-a147-fb1d560fb0f4"/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Descripcion}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="455" y="0" width="29" height="20" uuid="1d543fa6-f529-4b3e-9e37-84306ee2c73e"/>
+				<textElement textAlignment="Center">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Cantidad}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement x="495" y="0" width="54" height="20" uuid="ebc7f8c6-0b67-4867-b86b-8f82c45def61"/>
+				<textElement textAlignment="Right">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Importe}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

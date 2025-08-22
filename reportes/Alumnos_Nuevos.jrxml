@@ -1,0 +1,275 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Alumnos_Nuevos" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="39925f74-b200-418d-a39e-3dbbf177697e">
+	<property name="ireport.zoom" value="1.9487171000000014"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="CodigoCurso" class="java.lang.String"/>
+	<parameter name="Fecha_inicio" class="java.lang.String"/>
+	<parameter name="Fecha_fin" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[select DocumentoPago.NroSerie, RIGHT('0000000' + Ltrim(Rtrim(DocumentoPago.NroDocumentoPago)),7) as NroDocumentoPago, DocumentoPago.FechaPago, Alumnos.DNI, Alumnos.Codigo,
+Alumnos.ApellidoPaterno + ' ' + Alumnos.ApellidoMaterno + ' ' + Alumnos.Nombres as 'Nombre del Participante', Alumnos.Monto,
+Alumnos.ConceptoCurso, Alumnos.CodigoCurso,
+
+CASE
+WHEN Alumnos.TipoPago = 'CON'
+	THEN Alumnos.Monto
+	ELSE '' END
+	AS 'CONTADO' ,
+
+CASE
+WHEN Alumnos.TipoPago = 'CRE'
+	THEN Alumnos.Monto
+	ELSE '' END
+	AS 'CREDITO' ,
+
+Alumnos.Monto AS 'TOTAL ALUMNOS'
+
+from Alumnos, DocumentoPago, Cliente, DocumentoPagoDet
+where Alumnos.IdCliente = Cliente.IdCliente
+and Alumnos.IdDocumentoPagoDet = DocumentoPagoDet.IdDocumentoPagoDet
+and DocumentoPagoDet.IdDocumentoPago = DocumentoPago.IdDocumentoPago
+and Alumnos.CodigoCurso = $P{CodigoCurso}
+and DocumentoPago.FechaPago between $P{Fecha_inicio} and $P{Fecha_fin}
+and ISNULL( (SELECT CASE WHEN Nota.IdTipoNota = 1 THEN 1 WHEN Nota.IdTipoNota = 6 THEN 1 ELSE 0 END FROM Nota WHERE Nota.IdDocumentoPago = DocumentoPago.IdDocumentoPago) , 0) = 0]]>
+	</queryString>
+	<field name="NroSerie" class="java.lang.String"/>
+	<field name="NroDocumentoPago" class="java.lang.String"/>
+	<field name="FechaPago" class="java.sql.Date"/>
+	<field name="DNI" class="java.lang.String"/>
+	<field name="Codigo" class="java.lang.String"/>
+	<field name="Nombre del Participante" class="java.lang.String"/>
+	<field name="Monto" class="java.lang.Double"/>
+	<field name="ConceptoCurso" class="java.lang.String"/>
+	<field name="CodigoCurso" class="java.lang.String"/>
+	<field name="CONTADO" class="java.lang.Double"/>
+	<field name="CREDITO" class="java.lang.Double"/>
+	<field name="TOTAL ALUMNOS" class="java.lang.Double"/>
+	<variable name="Totales" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{Monto}]]></variableExpression>
+	</variable>
+	<variable name="Total_Contado" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{CONTADO}]]></variableExpression>
+	</variable>
+	<variable name="Total_Credito" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{CREDITO}]]></variableExpression>
+	</variable>
+	<variable name="CONTADOR" class="java.math.BigDecimal">
+		<variableExpression><![CDATA[$V{CONTADOR}.add(new BigDecimal(1))]]></variableExpression>
+		<initialValueExpression><![CDATA[new BigDecimal(0)]]></initialValueExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="80" splitType="Stretch">
+			<staticText>
+				<reportElement x="4" y="3" width="243" height="20" uuid="8cc76cc9-f7a5-4c21-8aae-fad19994a069"/>
+				<textElement>
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[COLEGIO DE CONTADORES PÚBLICOS DE AREQUIPA]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="69" y="56" width="43" height="20" uuid="df4e18b6-e92b-4403-a6ea-b0ecf548ae7c"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{CodigoCurso}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="28" y="56" width="40" height="20" uuid="b06ad95d-8e0b-4853-af3f-d2a6290d6387"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Código:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="123" y="56" width="91" height="20" uuid="64094bc0-8509-42e0-932e-35fb7adfaef3"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nombre del Curso:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="214" y="56" width="337" height="20" uuid="6d49ffa9-89e7-46b5-9243-5f20957d1e91"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ConceptoCurso}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="145" y="27" width="247" height="20" uuid="338bc8d5-9fc3-43a5-ab4d-f18f4d7420ed"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[REPORTE DE ALUMNOS INSCRITOS EN CURSOS]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="9" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="22" splitType="Stretch">
+			<staticText>
+				<reportElement x="23" y="0" width="28" height="20" uuid="1839745f-4621-4dd7-904b-08411ba6a387"/>
+				<textElement>
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Serie]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="54" y="0" width="35" height="20" uuid="444e647b-b437-4a76-9126-aa85488c2ccd"/>
+				<textElement>
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[N° Doc]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="93" y="0" width="41" height="20" uuid="723405bb-0eb3-41a9-a7da-611a7e951b12"/>
+				<textElement>
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Fecha]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="139" y="0" width="42" height="20" uuid="1aebdd53-ee0a-4782-ad86-b6567de378a2"/>
+				<textElement>
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[D.N.I.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="226" y="0" width="124" height="20" uuid="c548a14e-6682-4001-b55f-c556428d1d6a"/>
+				<textElement>
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nombre del Participante]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="3" y="0" width="18" height="20" uuid="09536070-abbc-413d-8e7e-70aa9a0cae02"/>
+				<textElement>
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[N°]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="185" y="0" width="36" height="20" uuid="8772f43e-f164-437a-81cf-cff73b9ed7bc"/>
+				<textElement>
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Código]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="452" y="0" width="47" height="20" uuid="6e0897fe-4f37-4df3-80c9-402d8e19ca4b"/>
+				<textElement textAlignment="Right">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Contado]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="504" y="0" width="47" height="20" uuid="d6f8a0d2-b62d-4c4b-b256-97af321d474c"/>
+				<textElement textAlignment="Right">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Crédito]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="22" splitType="Stretch">
+			<textField>
+				<reportElement x="23" y="0" width="28" height="20" uuid="5be9ef0e-7374-4c13-b1fb-3893ca0ebfc2"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{NroSerie}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="54" y="0" width="35" height="20" uuid="81658259-e0e3-4622-a3f8-ab4f8053dd5f"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{NroDocumentoPago}]]></textFieldExpression>
+			</textField>
+			<textField pattern="yyyy/MM/dd">
+				<reportElement x="93" y="0" width="41" height="20" uuid="93bd0361-5fef-46d2-9fdc-b9552fe60033"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{FechaPago}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="139" y="0" width="42" height="20" uuid="7d2db988-7b68-4fdc-8be6-9cdca9698705"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{DNI}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="226" y="0" width="223" height="20" uuid="f794faea-c4d4-48ae-8392-fca24181ba3f"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Nombre del Participante}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="185" y="0" width="36" height="20" uuid="4b9646d9-3b63-448a-b1a6-c085e86a73c8"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Codigo}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement x="452" y="0" width="47" height="20" uuid="e13c077a-ce21-4e84-a2b7-40675da3e9ee"/>
+				<textElement textAlignment="Right">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{CONTADO}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement x="504" y="0" width="47" height="22" uuid="e3b7c623-63a2-4503-94bf-c1772473820a"/>
+				<textElement textAlignment="Right">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{CREDITO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="4" y="0" width="17" height="20" uuid="3377ca6c-87ec-435f-89c4-f769e2313fe5"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{CONTADOR}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="10" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch">
+			<staticText>
+				<reportElement x="401" y="0" width="48" height="20" uuid="9c7270cb-f6bb-4be9-bc58-252ee7c05057"/>
+				<textElement>
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[TOTALES]]></text>
+			</staticText>
+			<textField pattern="#,##0.00">
+				<reportElement x="452" y="0" width="47" height="20" uuid="7a55f49d-632e-40eb-b5af-c32bf06df906"/>
+				<textElement textAlignment="Right">
+					<font size="7" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{Total_Contado}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement x="504" y="0" width="47" height="20" uuid="42763477-8a70-4bba-8708-bc22e925b4f2"/>
+				<textElement textAlignment="Right">
+					<font size="7" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{Total_Credito}]]></textFieldExpression>
+			</textField>
+		</band>
+	</summary>
+</jasperReport>
