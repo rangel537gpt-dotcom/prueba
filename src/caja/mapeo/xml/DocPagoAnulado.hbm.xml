@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 15/10/2016 10:02:39 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="caja.mapeo.entidades.DocPagoAnulado" table="DocPagoAnulado" schema="dbo" catalog="Caja" optimistic-lock="version">
+        <id name="idDocPagoAnulado" type="int">
+            <column name="IdDocPagoAnulado" />
+            <generator class="identity" />
+        </id>
+        <property name="tipoDoc" type="string">
+            <column name="TipoDoc" length="50" />
+        </property>
+        <property name="nroSerie" type="string">
+            <column name="NroSerie" length="4"/>
+        </property>
+        <property name="nroDoc" type="java.lang.Integer">
+            <column name="NroDoc" />
+        </property>
+        <property name="fechaDoc" type="date">
+            <column name="FechaDoc" length="10" />
+        </property>
+        <property name="fechaSistema" type="timestamp">
+            <column name="FechaSistema" length="23" />
+        </property>
+        <set name="docPagoAnuladoDetalles" table="DocPagoAnuladoDetalle" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="IdDocPagoAnulado" />
+            </key>
+            <one-to-many class="caja.mapeo.entidades.DocPagoAnuladoDetalle" />
+        </set>
+    </class>
+</hibernate-mapping>

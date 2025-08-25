@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 15/10/2016 10:02:39 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="caja.mapeo.entidades.ConceptoGastoDetalle" table="ConceptoGastoDetalle" schema="dbo" catalog="Caja" optimistic-lock="version">
+        <id name="idConceptoGastoDetalle" type="int">
+            <column name="IdConceptoGastoDetalle" />
+            <generator class="identity" />
+        </id>
+        <property name="descripcionGasto" type="string">
+            <column name="DescripcionGasto" length="200" not-null="true" />
+        </property>
+        <property name="observacion" type="string">
+            <column name="Observacion" length="200" />
+        </property>
+        <property name="cargo" type="string">
+            <column name="Cargo" length="10" />
+        </property>
+        <property name="abono" type="string">
+            <column name="Abono" length="10" />
+        </property>
+        <set name="gastoDetalles" table="GastoDetalle" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="IdConceptoGastoDetalle" not-null="true" />
+            </key>
+            <one-to-many class="caja.mapeo.entidades.GastoDetalle" />
+        </set>
+    </class>
+</hibernate-mapping>

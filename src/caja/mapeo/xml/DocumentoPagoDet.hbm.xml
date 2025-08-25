@@ -1,0 +1,147 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 15/10/2016 10:02:39 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="caja.mapeo.entidades.DocumentoPagoDet" table="DocumentoPagoDet" schema="dbo" catalog="Caja" optimistic-lock="version">
+        <id name="idDocumentoPagoDet" type="int">
+            <column name="IdDocumentoPagoDet" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="conceptoPagoDetalle" class="caja.mapeo.entidades.ConceptoPagoDetalle" fetch="select">
+            <column name="IdConceptoPagoDetalle" not-null="true" />
+        </many-to-one>
+        <many-to-one name="documentoPago" class="caja.mapeo.entidades.DocumentoPago" fetch="select">
+            <column name="IdDocumentoPago" not-null="true" />
+        </many-to-one>
+        <property name="cantidad" type="int">
+            <column name="Cantidad" not-null="true" />
+        </property>
+        <property name="precioUnitario" type="double">
+            <column name="PrecioUnitario" precision="53" scale="0" not-null="true" />
+        </property>
+        <property name="anioDesde" type="java.lang.Integer">
+            <column name="AnioDesde" />
+        </property>
+        <property name="mesDesde" type="java.lang.Integer">
+            <column name="MesDesde" />
+        </property>
+        <property name="anioHasta" type="java.lang.Integer">
+            <column name="AnioHasta" />
+        </property>
+        <property name="mesHasta" type="java.lang.Integer">
+            <column name="MesHasta" />
+        </property>
+        <property name="observacion" type="string">
+            <column name="Observacion" length="200" />
+        </property>
+        <property name="codigoTipoAfectacion" type="string">
+            <column name="CodigoTipoAfectacion" length="2" />
+        </property>
+        <property name="codigoTipoTributo" type="string">
+            <column name="CodigoTipoTributo" length="4" />
+        </property>
+        <property name="codigoInternacionalTipoTributo" type="string">
+            <column name="CodigoInternacionalTipoTributo" length="4" />
+        </property>
+        <property name="nombreTipoTributo" type="string">
+            <column name="NombreTipoTributo" length="4" />
+        </property>
+        <property name="codigoBienServicioDetraccion" type="string">
+            <column name="codigo_bien_servicio_detraccion" length="20" />
+        </property>
+        <property name="porcentajeDetraccion" type="java.lang.Double">
+            <column name="porcentaje_detraccion" precision="53" scale="0"/>
+        </property>
+        <property name="montoDetraccion" type="java.lang.Double">
+            <column name="monto_detraccion" precision="53" scale="0"/>
+        </property>
+        <property name="igvPorcentaje" type="java.lang.Double">
+            <column name="IgvPorcentaje" precision="53" scale="0"/>
+        </property>
+        <property name="valorVenta" type="java.lang.Double">
+            <column name="ValorVenta" precision="53" scale="0" />
+        </property>
+        <property name="precioVenta" type="java.lang.Double">
+            <column name="PrecioVenta" precision="53" scale="0" />
+        </property>
+        <property name="igv" type="java.lang.Double">
+            <column name="Igv" precision="53" scale="0" />
+        </property>
+        <property name="tieneDescuento" type="string">
+            <column name="TieneDescuento" length="1" />
+        </property>
+        <property name="descuento" type="java.lang.Double">
+            <column name="Descuento" precision="53" scale="0" />
+        </property>
+        <property name="glosa" type="string">
+            <column name="Glosa" length="200" />
+        </property>
+        <set name="alumnoses" table="Alumnos" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="IdDocumentoPagoDet" not-null="true" />
+            </key>
+            <one-to-many class="caja.mapeo.entidades.Alumnos" />
+        </set>
+        <set name="reincorporacionDocumentoPagos" table="ReincorporacionDocumentoPago" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="IdDocPagoDetalle" />
+            </key>
+            <one-to-many class="caja.mapeo.entidades.ReincorporacionDocumentoPago" />
+        </set>
+        <set name="financiamientoDocumentoPagos" table="FinanciamientoDocumentoPago" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="IdDocPagoDet" />
+            </key>
+            <one-to-many class="caja.mapeo.entidades.FinanciamientoDocumentoPago" />
+        </set>
+        <set name="cuotases" table="Cuotas" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="IdDocDet" />
+            </key>
+            <one-to-many class="caja.mapeo.entidades.Cuotas" />
+        </set>
+        <set name="deudas" table="Deuda" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="IdDocPagDet" />
+            </key>
+            <one-to-many class="caja.mapeo.entidades.Deuda" />
+        </set>
+        <set name="congresoParticipanteses" table="CongresoParticipantes" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="IdDocumentoPagoDet" />
+            </key>
+            <one-to-many class="caja.mapeo.entidades.CongresoParticipantes" />
+        </set>
+        <set name="cuentaCorrientes" table="CuentaCorriente" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="IdDocumentoPagoDet" not-null="true" />
+            </key>
+            <one-to-many class="caja.mapeo.entidades.CuentaCorriente" />
+        </set>
+        <set name="participantes" table="Participante" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="IdDocumentoPagoDet" not-null="true" />
+            </key>
+            <one-to-many class="caja.mapeo.entidades.Participante" />
+        </set>
+        <set name="valeAcademicos" table="ValeAcademico" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="id_documento_pago_detalle" not-null="true" />
+            </key>
+            <one-to-many class="caja.mapeo.entidades.ValeAcademico" />
+        </set>
+        <set name="valeAcademicoConsumos" table="ValeAcademicoConsumo" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="id_documento_pago_detalle" not-null="true" />
+            </key>
+            <one-to-many class="caja.mapeo.entidades.ValeAcademicoConsumo" />
+        </set>
+        <set name="constanciaHabilitacions" table="constancia_habilitacion" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="id_documento_pago_det" not-null="true" />
+            </key>
+            <one-to-many class="caja.mapeo.entidades.ConstanciaHabilitacion" />
+        </set>
+    </class>
+</hibernate-mapping>

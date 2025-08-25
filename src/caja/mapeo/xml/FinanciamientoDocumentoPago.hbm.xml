@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 15/10/2016 10:02:39 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="caja.mapeo.entidades.FinanciamientoDocumentoPago" table="FinanciamientoDocumentoPago" schema="dbo" catalog="Caja" optimistic-lock="version">
+        <id name="id" type="int">
+            <column name="Id" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="documentoPagoDet" class="caja.mapeo.entidades.DocumentoPagoDet" fetch="select">
+            <column name="IdDocPagoDet" />
+        </many-to-one>
+        <many-to-one name="financiamiento" class="caja.mapeo.entidades.Financiamiento" fetch="select">
+            <column name="IdFinanciamiento" />
+        </many-to-one>
+        <property name="estado" type="string">
+            <column name="Estado" length="2" />
+        </property>
+        <property name="monto" type="java.lang.Double">
+            <column name="Monto" precision="53" scale="0" />
+        </property>
+        <property name="fechaVencimiento" type="date">
+            <column name="FechaVencimiento" length="10" />
+        </property>
+        <property name="nroCuota" type="java.lang.Integer">
+            <column name="NroCuota" />
+        </property>
+        <property name="diasProrroga" type="java.lang.Integer">
+            <column name="DiasProrroga" />
+        </property>
+        <property name="montoSinPagoDeMas" type="java.lang.Double">
+            <column name="MontoSinPagoDeMas" precision="53" scale="0" />
+        </property>
+        <property name="montoPagoDeMas" type="java.lang.Double">
+            <column name="MontoPagoDeMas" precision="53" scale="0" />
+        </property>
+        <property name="idFinanciamientoNuevo" type="java.lang.Integer">
+            <column name="IdFinanciamientoNuevo" />
+        </property>
+    </class>
+</hibernate-mapping>

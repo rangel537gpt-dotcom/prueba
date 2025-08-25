@@ -1,0 +1,403 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 15/10/2016 10:02:39 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="caja.mapeo.entidades.Cliente" table="Cliente" schema="dbo" catalog="Caja" optimistic-lock="version">
+        <id name="idCliente" type="int">
+            <column name="IdCliente" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="universidadEstudios" class="caja.mapeo.entidades.Universidad" fetch="select">
+            <column name="id_universidad_estudios" />
+        </many-to-one>
+        <many-to-one name="universidadTitulo" class="caja.mapeo.entidades.Universidad" fetch="select">
+            <column name="id_universidad_titulo" />
+        </many-to-one>
+        <many-to-one name="tipoDocIdentidad" class="caja.mapeo.entidades.TipoDocIdentidad" fetch="select">
+            <column name="PIdTipoDocumento" />
+        </many-to-one>
+        <many-to-one name="ubigeoDistritoByPidDistritoTra" class="caja.mapeo.entidades.UbigeoDistrito" fetch="select">
+            <column name="PidDistritoTra" />
+        </many-to-one>
+        <many-to-one name="ubigeoDistritoByPidDistritoDom" class="caja.mapeo.entidades.UbigeoDistrito" fetch="select">
+            <column name="PidDistritoDom" />
+        </many-to-one>
+        <many-to-one name="fichaDatos" column="id_ficha" class="caja.mapeo.entidades.FichaDatos" not-null="false"/>
+        <property name="pnombre" type="string">
+            <column name="PNombre" length="50" />
+        </property>
+        <property name="papePat" type="string">
+            <column name="PApePat" length="50" />
+        </property>
+        <property name="papeMat" type="string">
+            <column name="PApeMat" length="50" />
+        </property>
+        <property name="pdni" type="string">
+            <column name="PDNI" length="8" />
+        </property>
+        <property name="eliminadoApp" type="string">
+            <column name="eliminado_app" length="1" />
+        </property>
+        <property name="pnroDocumento" type="string">
+            <column name="PNroDocumento" length="8" />
+        </property>
+        <property name="esEstudioContable" type="string">
+            <column name="es_estudio_contable" length="1" />
+        </property>
+        <property name="psexo" type="string">
+            <column name="PSexo" length="1" />
+        </property>
+        <property name="pfechaNac" type="date">
+            <column name="PFechaNac" length="10" />
+        </property>
+        <property name="pdireccionDomicilio" type="string">
+            <column name="PDireccionDomicilio" length="200" />
+        </property>
+        <property name="pdireccionTrabajo" type="string">
+            <column name="PDireccionTrabajo" length="200" />
+        </property>
+        <property name="ptelefonoDomicilio" type="string">
+            <column name="PTelefonoDomicilio" length="15" />
+        </property>
+        <property name="ptelefonoTrabajo" type="string">
+            <column name="PTelefonoTrabajo" length="15" />
+        </property>
+        <property name="ptelefonoTrabajo1" type="string">
+            <column name="PTelefonoTrabajo1" length="15" />
+        </property>
+        <property name="ptelefonoCelular" type="string">
+            <column name="PTelefonoCelular" length="15" />
+        </property>
+        <property name="ptelefonoCelular1" type="string">
+            <column name="PTelefonoCelular1" length="15" />
+        </property>
+        <property name="ccodigoCole" type="string">
+            <column name="CCodigoCole" length="5" />
+        </property>
+        <property name="cctaCte" type="string">
+            <column name="CCtaCte" length="12" />
+        </property>
+        <property name="cuniversidad" type="string">
+            <column name="CUniversidad" length="50" />
+        </property>
+        <property name="cfechaAfiliacion" type="date">
+            <column name="CFechaAfiliacion" length="10" />
+        </property>
+        <property name="cemail" type="string">
+            <column name="CEmail" length="50" />
+        </property>
+        <property name="cemailAlternativo" type="string">
+            <column name="CEmailAlternativo" length="50" />
+        </property>
+        <property name="cbuzon" type="string">
+            <column name="CBuzon" length="1" />
+        </property>
+        <property name="clugarCobranza" type="string">
+            <column name="CLugarCobranza" length="4" />
+        </property>
+        <property name="cobservacion" type="string">
+            <column name="CObservacion" length="200" />
+        </property>
+        <property name="estadoCivil" type="string">
+            <column name="estado_civil" length="30" />
+        </property>
+        <property name="cobcodigoCobrador" type="string">
+            <column name="COBCodigoCobrador" length="2" />
+        </property>
+        <property name="publicidad" type="string">
+            <column name="publicidad" length="1" />
+        </property>
+        <property name="cdepDomicilio" type="java.lang.Integer">
+            <column name="CDepDomicilio" />
+        </property>
+        <property name="cproDomicilio" type="java.lang.Integer">
+            <column name="CProDomicilio" />
+        </property>
+        <property name="cdisDomicilio" type="java.lang.Integer">
+            <column name="CDisDomicilio" />
+        </property>
+        <property name="clocaDomicilio" type="java.lang.Integer">
+            <column name="CLocaDomicilio" />
+        </property>
+        <property name="cdepTrabajo" type="java.lang.Integer">
+            <column name="CDepTrabajo" />
+        </property>
+        <property name="cproTrabajo" type="java.lang.Integer">
+            <column name="CProTrabajo" />
+        </property>
+        <property name="cdisTrabajo" type="java.lang.Integer">
+            <column name="CDisTrabajo" />
+        </property>
+        <property name="clocaTrabajo" type="java.lang.Integer">
+            <column name="CLocaTrabajo" />
+        </property>
+        <property name="ccentroTrabajo" type="string">
+            <column name="CCentroTrabajo" length="80" />
+        </property>
+        <property name="scodigoSoc" type="string">
+            <column name="SCodigoSoc" length="4" />
+        </property>
+        <property name="sruc" type="string">
+            <column name="SRUC" length="11" />
+        </property>
+        <property name="sfechaAfiliacion" type="date">
+            <column name="SFechaAfiliacion" length="10" />
+        </property>
+        <property name="scondicion" type="string">
+            <column name="SCondicion" length="2" />
+        </property>
+        <property name="snroCta" type="string">
+            <column name="SNro_Cta" length="15" />
+        </property>
+        <property name="sfechaPagos" type="date">
+            <column name="SFecha_Pagos" length="10" />
+        </property>
+        <property name="semail" type="string">
+            <column name="SEmail" length="70" />
+        </property>
+        <property name="semailAlternativo" type="string">
+            <column name="SEmailAlternativo" length="30" />
+        </property>
+        <property name="snombreSociedad" type="string">
+            <column name="SNombreSociedad" length="300" />
+        </property>
+        <property name="sdireccion" type="string">
+            <column name="SDireccion" length="300" />
+        </property>
+        <property name="stelefonoFijo" type="string">
+            <column name="STelefonoFijo" length="15" />
+        </property>
+        <property name="stelefonoCelular" type="string">
+            <column name="STelefonoCelular" length="15" />
+        </property>
+        <property name="spaginaWeb" type="string">
+            <column name="SPaginaWeb" length="50" />
+        </property>
+        <property name="sobservacion" type="string">
+            <column name="SObservacion" length="200" />
+        </property>
+        <property name="sciudad" type="string">
+            <column name="SCiudad" length="3" />
+        </property>
+        <property name="sdepartamento" type="java.lang.Integer">
+            <column name="SDepartamento" />
+        </property>
+        <property name="sprovincia" type="java.lang.Integer">
+            <column name="SProvincia" />
+        </property>
+        <property name="sdistrito" type="java.lang.Integer">
+            <column name="SDistrito" />
+        </property>
+        <property name="scobrador" type="string">
+            <column name="SCobrador" length="2" />
+        </property>
+        <property name="eruc" type="string">
+            <column name="ERUC" length="12" />
+        </property>
+        <property name="enombre" type="string">
+            <column name="ENombre" length="300" />
+        </property>
+        <property name="enroCta" type="string">
+            <column name="ENroCta" length="15" />
+        </property>
+        <property name="ebanco" type="string">
+            <column name="EBanco" length="30" />
+        </property>
+        <property name="econdicion" type="string">
+            <column name="ECondicion" length="20" />
+        </property>
+        <property name="edireccion" type="string">
+            <column name="EDireccion" length="300" />
+        </property>
+        <property name="etelefonoFijo" type="string">
+            <column name="ETelefonoFijo" length="15" />
+        </property>
+        <property name="etelefonoCelular" type="string">
+            <column name="ETelefonoCelular" length="15" />
+        </property>
+        <property name="eciudad" type="string">
+            <column name="ECiudad" length="20" />
+        </property>
+        <property name="eemail" type="string">
+            <column name="Eemail" length="50" />
+        </property>
+        <property name="edepDomicilio" type="java.lang.Integer">
+            <column name="EDepDomicilio" />
+        </property>
+        <property name="eproDomicilio" type="java.lang.Integer">
+            <column name="EProDomicilio" />
+        </property>
+        <property name="edisDomicilio" type="java.lang.Integer">
+            <column name="EDisDomicilio" />
+        </property>
+        <property name="pemail" type="string">
+            <column name="PEmail" length="50" />
+        </property>
+        <property name="tipoCliente" type="string">
+            <column name="TipoCliente" length="1" />
+        </property>
+        <property name="estado" type="string">
+            <column name="Estado" length="1" />
+        </property>
+        <property name="cesCertificado" type="string">
+            <column name="CEsCertificado" length="1" />
+        </property>
+        <property name="cpasswd" type="string">
+            <column name="CPasswd" length="20" />
+        </property>
+        <property name="cnroCertificacion" type="string">
+            <column name="CNroCertificacion" length="9" />
+        </property>
+        <property name="cmatAuditor" type="string">
+            <column name="CMatAuditor" length="3" />
+        </property>
+        <property name="cestaActivo" type="string">
+            <column name="CEstaActivo" length="1" />
+        </property>
+        <property name="lugarNacimiento" type="string">
+            <column name="lugar_nacimiento" length="700" />
+        </property>
+        <property name="paginaWeb" type="string">
+            <column name="pagina_web" length="100" />
+        </property>
+        <property name="modalidadObtencionTitulo" type="string">
+            <column name="modalidad_obtencion_titulo" length="200" />
+        </property>
+        <property name="estudiosEspecializacion" type="string">
+            <column name="estudios_especializacion" length="700" />
+        </property>
+        <property name="otrosEstudios" type="string">
+            <column name="otros_estudios" length="700" />
+        </property>
+        <property name="becasObtenidas" type="string">
+            <column name="becas_obtenidas" length="700" />
+        </property>
+        <property name="correspondenciaFisica" type="string">
+            <column name="correspondencia_fisica" length="1" />
+        </property>
+        <property name="actividadesCulturales" type="string">
+            <column name="actividades_culturales" length="3000" />
+        </property>
+        <property name="temasGustariaRecibirCapacitacion" type="string">
+            <column name="temas_gustaria_recibir_capacitacion" />
+        </property>
+        <property name="nombreConyugue" type="string">
+            <column name="nombre_conyugue" />
+        </property>
+        <property name="nombreHijos" type="string">
+            <column name="nombre_hijos" />
+        </property>
+        <property name="nacionalidad" type="string">
+            <column name="nacionalidad" length="50" />
+        </property>
+        <property name="fechaOptoTitulo" type="date">
+            <column name="fecha_opto_titulo" length="10" />
+        </property>
+        <property name="fechaOptoGradoBachiller" type="date">
+            <column name="fecha_opto_grado_bachiller" length="10" />
+        </property>
+        <set name="clienteCertificados" table="ClienteCertificado" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="IdCliente" not-null="true" />
+            </key>
+            <one-to-many class="caja.mapeo.entidades.ClienteCertificado" />
+        </set>
+        <set name="usuarios" table="Usuario" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="IdCliente" not-null="true" />
+            </key>
+            <one-to-many class="caja.mapeo.entidades.Usuario" />
+        </set>
+        <set name="documentoPagosForIdContadorEmpresa" table="DocumentoPago" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="IdContadorEmpresa" />
+            </key>
+            <one-to-many class="caja.mapeo.entidades.DocumentoPago" />
+        </set>
+        <set name="alumnoses" table="Alumnos" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="IdCliente" not-null="true" />
+            </key>
+            <one-to-many class="caja.mapeo.entidades.Alumnos" />
+        </set>
+        <set name="deudas" table="Deuda" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="IdCliente" />
+            </key>
+            <one-to-many class="caja.mapeo.entidades.Deuda" />
+        </set>
+        <set name="financiamientos" table="Financiamiento" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="IdCliente" not-null="true" />
+            </key>
+            <one-to-many class="caja.mapeo.entidades.Financiamiento" />
+        </set>
+        <set name="cuotases" table="Cuotas" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="IdCliente" not-null="true" />
+            </key>
+            <one-to-many class="caja.mapeo.entidades.Cuotas" />
+        </set>
+        <set name="pagoDeMases" table="PagoDeMas" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="IdCliente" />
+            </key>
+            <one-to-many class="caja.mapeo.entidades.PagoDeMas" />
+        </set>
+        <set name="reincorporacions" table="Reincorporacion" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="IdCliente" />
+            </key>
+            <one-to-many class="caja.mapeo.entidades.Reincorporacion" />
+        </set>
+        <set name="cobradors" table="Cobrador" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="IdCliente" not-null="true" unique="true" />
+            </key>
+            <one-to-many class="caja.mapeo.entidades.Cobrador" />
+        </set>
+        <set name="cuentaCorrientes" table="CuentaCorriente" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="IdCliente" not-null="true" />
+            </key>
+            <one-to-many class="caja.mapeo.entidades.CuentaCorriente" />
+        </set>
+        <set name="documentoPagosForIdCliente" table="DocumentoPago" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="IdCliente" />
+            </key>
+            <one-to-many class="caja.mapeo.entidades.DocumentoPago" />
+        </set>
+        <set name="gastoses" table="Gastos" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="IdCliente" not-null="true" />
+            </key>
+            <one-to-many class="caja.mapeo.entidades.Gastos" />
+        </set>
+        <set name="emailings" table="emailing" schema="cursos" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="id_cliente" />
+            </key>
+            <one-to-many class="caja.mapeo.entidades.Emailing" />
+        </set>
+        <set name="clienteDerechoHabientes" table="cliente_derecho_habiente" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="id_cliente" not-null="true" />
+            </key>
+            <one-to-many class="caja.mapeo.entidades.ClienteDerechoHabiente" />
+        </set>
+        <set name="clienteEstudioContables" table="cliente_estudio_contable" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="id_cliente" not-null="true" />
+            </key>
+            <one-to-many class="caja.mapeo.entidades.ClienteEstudioContable" />
+        </set>
+        <set name="constanciaHabilitacions" table="constancia_habilitacion" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="id_cliente" not-null="true" />
+            </key>
+            <one-to-many class="caja.mapeo.entidades.ConstanciaHabilitacion" />
+        </set>
+    </class>
+</hibernate-mapping>

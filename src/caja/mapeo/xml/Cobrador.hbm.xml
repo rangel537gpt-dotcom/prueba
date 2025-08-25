@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 15/10/2016 10:02:39 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="caja.mapeo.entidades.Cobrador" table="Cobrador" schema="dbo" catalog="Caja" optimistic-lock="version">
+        <id name="idCobrador" type="int">
+            <column name="IdCobrador" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="cliente" class="caja.mapeo.entidades.Cliente" fetch="select">
+            <column name="IdCliente" not-null="true" unique="true" />
+        </many-to-one>
+        <property name="codCobrador" type="string">
+            <column name="CodCobrador" length="5" not-null="true" />
+        </property>
+        <property name="zonaCob" type="string">
+            <column name="ZonaCob" length="30" />
+        </property>
+        <property name="estado" type="string">
+            <column name="Estado" length="1" />
+        </property>
+        <property name="fechaPago" type="timestamp">
+            <column name="Fecha_Pago" length="23" />
+        </property>
+        <property name="observacion" type="string">
+            <column name="Observacion" length="100" />
+        </property>
+        <set name="documentoPagos" table="DocumentoPago" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="IdCobrador" />
+            </key>
+            <one-to-many class="caja.mapeo.entidades.DocumentoPago" />
+        </set>
+    </class>
+</hibernate-mapping>

@@ -1,0 +1,60 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 15/10/2016 10:02:39 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="caja.mapeo.entidades.CcctacteExport" table="CCCTACTE_EXPORT" schema="dbo" catalog="Caja" optimistic-lock="version">
+        <id name="id" type="int">
+            <column name="ID" />
+            <generator class="identity" />
+        </id>
+        <property name="ccTipcli" type="string">
+            <column name="CC_TIPCLI" length="50" />
+        </property>
+        <property name="ccCodcli" type="string">
+            <column name="CC_CODCLI" length="50" />
+        </property>
+        <property name="ccMatric" type="string">
+            <column name="CC_MATRIC" length="50" />
+        </property>
+        <property name="ccTipmov" type="string">
+            <column name="CC_TIPMOV" length="50" />
+        </property>
+        <property name="ccTipdoc" type="string">
+            <column name="CC_TIPDOC" length="50" />
+        </property>
+        <property name="ccSerdoc" type="string">
+            <column name="CC_SERDOC" length="50" />
+        </property>
+        <property name="ccNumdoc" type="string">
+            <column name="CC_NUMDOC" length="50" />
+        </property>
+        <property name="ccFecmov" type="timestamp">
+            <column name="CC_FECMOV" length="23" />
+        </property>
+        <property name="ccFecvto" type="timestamp">
+            <column name="CC_FECVTO" length="23" />
+        </property>
+        <property name="ccImport" type="java.lang.Double">
+            <column name="CC_IMPORT" precision="53" scale="0" />
+        </property>
+        <property name="ccPagado" type="java.lang.Double">
+            <column name="CC_PAGADO" precision="53" scale="0" />
+        </property>
+        <property name="ccTipref" type="string">
+            <column name="CC_TIPREF" length="50" />
+        </property>
+        <property name="ccSerref" type="string">
+            <column name="CC_SERREF" length="50" />
+        </property>
+        <property name="ccNumref" type="string">
+            <column name="CC_NUMREF" length="50" />
+        </property>
+        <property name="ccObserv" type="string">
+            <column name="CC_OBSERV" length="50" />
+        </property>
+        <property name="ccFlag" type="java.lang.Boolean">
+            <column name="CC_FLAG" />
+        </property>
+    </class>
+</hibernate-mapping>

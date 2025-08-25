@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 15/10/2016 10:02:39 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="caja.mapeo.entidades.ClienteDerechoHabiente" table="cliente_derecho_habiente" schema="dbo" catalog="Caja" optimistic-lock="version">
+        <id name="id" type="int">
+            <column name="id" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="cliente" class="caja.mapeo.entidades.Cliente" fetch="select">
+            <column name="id_cliente" not-null="true" unique="true" />
+        </many-to-one>
+        <property name="fechaNacimiento" type="date">
+            <column name="fecha_nacimiento" length="10" />
+        </property>
+        <property name="nombre" type="string">
+            <column name="nombre" length="50" />
+        </property>
+        <property name="apePat" type="string">
+            <column name="ape_pat" length="30" />
+        </property>
+        <property name="apeMat" type="string">
+            <column name="ape_mat" length="30" />
+        </property>
+        <property name="parentesco" type="string">
+            <column name="parentesco" length="50" />
+        </property>
+        <property name="email" type="string">
+            <column name="email" length="50" />
+        </property>
+        <property name="celular" type="string">
+            <column name="celular" length="10" />
+        </property>
+        <property name="sexo" type="string">
+            <column name="sexo" length="1" />
+        </property>
+        <property name="dni" type="string">
+            <column name="dni" length="8" />
+        </property>
+        <property name="borrado" type="string">
+            <column name="borrado" length="1" />
+        </property>
+    </class>
+</hibernate-mapping>

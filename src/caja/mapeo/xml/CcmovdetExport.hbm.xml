@@ -1,0 +1,60 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 15/10/2016 10:02:39 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="caja.mapeo.entidades.CcmovdetExport" table="CCMOVDET_EXPORT" schema="dbo" catalog="Caja" optimistic-lock="version">
+        <id name="id" type="int">
+            <column name="ID" />
+            <generator class="identity" />
+        </id>
+        <property name="deTipdoc" type="string">
+            <column name="DE_TIPDOC" length="50" />
+        </property>
+        <property name="deSerdoc" type="string">
+            <column name="DE_SERDOC" length="50" />
+        </property>
+        <property name="deNumdoc" type="string">
+            <column name="DE_NUMDOC" length="50" />
+        </property>
+        <property name="deFecemi" type="timestamp">
+            <column name="DE_FECEMI" length="23" />
+        </property>
+        <property name="deTipeve" type="string">
+            <column name="DE_TIPEVE" length="50" />
+        </property>
+        <property name="deDescri" type="string">
+            <column name="DE_DESCRI" length="50" />
+        </property>
+        <property name="deCuota" type="string">
+            <column name="DE_CUOTA" length="50" />
+        </property>
+        <property name="deTipaso" type="string">
+            <column name="DE_TIPASO" length="50" />
+        </property>
+        <property name="deCodaso" type="string">
+            <column name="DE_CODASO" length="50" />
+        </property>
+        <property name="deCantid" type="java.lang.Double">
+            <column name="DE_CANTID" precision="53" scale="0" />
+        </property>
+        <property name="deValvta" type="java.lang.Double">
+            <column name="DE_VALVTA" precision="53" scale="0" />
+        </property>
+        <property name="deDescto" type="java.lang.Double">
+            <column name="DE_DESCTO" precision="53" scale="0" />
+        </property>
+        <property name="deIgvite" type="java.lang.Double">
+            <column name="DE_IGVITE" precision="53" scale="0" />
+        </property>
+        <property name="deVvtame" type="java.lang.Double">
+            <column name="DE_VVTAME" precision="53" scale="0" />
+        </property>
+        <property name="deIgvme" type="java.lang.Double">
+            <column name="DE_IGVME" precision="53" scale="0" />
+        </property>
+        <property name="deFlag" type="java.lang.Double">
+            <column name="DE_FLAG" precision="53" scale="0" />
+        </property>
+    </class>
+</hibernate-mapping>

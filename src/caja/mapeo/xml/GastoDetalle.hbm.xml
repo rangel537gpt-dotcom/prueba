@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 15/10/2016 10:02:39 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="caja.mapeo.entidades.GastoDetalle" table="GastoDetalle" schema="dbo" catalog="Caja" optimistic-lock="version">
+        <id name="idGastosDetalle" type="int">
+            <column name="IdGastosDetalle" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="conceptoGastoDetalle" class="caja.mapeo.entidades.ConceptoGastoDetalle" fetch="select">
+            <column name="IdConceptoGastoDetalle" not-null="true" />
+        </many-to-one>
+        <many-to-one name="gastos" class="caja.mapeo.entidades.Gastos" fetch="select">
+            <column name="IdGastos" not-null="true" />
+        </many-to-one>
+        <property name="cantidad" type="int">
+            <column name="Cantidad" not-null="true" />
+        </property>
+        <property name="precioUnitario" type="double">
+            <column name="PrecioUnitario" precision="53" scale="0" not-null="true" />
+        </property>
+        <property name="observacion" type="string">
+            <column name="Observacion" length="150" />
+        </property>
+    </class>
+</hibernate-mapping>

@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 15/10/2016 10:02:39 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="caja.mapeo.entidades.DocPagoAnuladoDetalle" table="DocPagoAnuladoDetalle" schema="dbo" catalog="Caja" optimistic-lock="version">
+        <id name="idDocPagoAnuladoDetalle" type="int">
+            <column name="IdDocPagoAnuladoDetalle" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="conceptoPagoDetalle" class="caja.mapeo.entidades.ConceptoPagoDetalle" fetch="select">
+            <column name="IdConceptoPagoDetalle" />
+        </many-to-one>
+        <many-to-one name="docPagoAnulado" class="caja.mapeo.entidades.DocPagoAnulado" fetch="select">
+            <column name="IdDocPagoAnulado" />
+        </many-to-one>
+        <property name="precioUnitario" type="java.lang.Double">
+            <column name="PrecioUnitario" precision="53" scale="0" />
+        </property>
+        <property name="cantidad" type="java.lang.Integer">
+            <column name="Cantidad" />
+        </property>
+        <property name="valorVenta" type="java.lang.Double">
+            <column name="ValorVenta" precision="53" scale="0" />
+        </property>
+        <property name="igv" type="java.lang.Double">
+            <column name="Igv" precision="53" scale="0" />
+        </property>
+    </class>
+</hibernate-mapping>

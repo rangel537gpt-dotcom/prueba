@@ -1,0 +1,96 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 15/10/2016 10:02:39 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="caja.mapeo.entidades.ConceptoPagoDetalle" table="ConceptoPagoDetalle" schema="dbo" catalog="Caja" optimistic-lock="version">
+        <id name="idConceptoPagoDetalle" type="int">
+            <column name="IdConceptoPagoDetalle" />
+            <generator class="identity" />
+        </id>
+        <property name="descripcion" type="string">
+            <column name="Descripcion" length="300" not-null="true" unique="true" />
+        </property>
+        <property name="observacion" type="string">
+            <column name="Observacion" length="500" />
+        </property>
+        <property name="cargo" type="string">
+            <column name="Cargo" length="10" />
+        </property>
+        <property name="abono" type="string">
+            <column name="Abono" length="10" />
+        </property>
+        <property name="tipoCodigo" type="string">
+            <column name="TipoCodigo" length="3" />
+        </property>
+        <property name="codigo" type="string">
+            <column name="Codigo" length="5" />
+        </property>
+        <property name="codigoPresupuesto" type="string">
+            <column name="Codigo_presupuesto" length="10" />
+        </property>
+        <property name="estado" type="string">
+            <column name="Estado" length="1" />
+        </property>
+        <property name="tieneIgv" type="string">
+            <column name="TieneIgv" length="1" />
+        </property>
+        <property name="mostrarWeb" type="string">
+            <column name="MostrarWeb" length="2" />
+        </property>
+        <property name="porcentajeIgv" type="java.lang.Double">
+            <column name="PorcentajeIgv" precision="53" scale="0" />
+        </property>
+        <property name="porcentajeDetraccion" type="java.lang.Double">
+            <column name="porcentaje_detraccion" precision="53" scale="0" />
+        </property>
+        <many-to-one name="tipoAfectacion" class="caja.mapeo.entidades.TipoAfectacion" fetch="select">
+            <column name="IdTipoAfectacion" not-null="true" />
+        </many-to-one>
+        <many-to-one name="codigoBienServicioDetraccion" class="caja.mapeo.entidades.CodigoBienServicioDetraccion" fetch="select">
+            <column name="id_codigo_bien_servicio_detraccion" not-null="false" />
+        </many-to-one>
+        <set name="cuotases" table="Cuotas" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="IdConceptoPagoDetalle" />
+            </key>
+            <one-to-many class="caja.mapeo.entidades.Cuotas" />
+        </set>
+        <set name="congresoConceptos" table="CongresoConcepto" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="IdConcepto" />
+            </key>
+            <one-to-many class="caja.mapeo.entidades.CongresoConcepto" />
+        </set>
+        <set name="documentoPagoDets" table="DocumentoPagoDet" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="IdConceptoPagoDetalle" not-null="true" />
+            </key>
+            <one-to-many class="caja.mapeo.entidades.DocumentoPagoDet" />
+        </set>
+        <set name="docPagoAnuladoDetalles" table="DocPagoAnuladoDetalle" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="IdConceptoPagoDetalle" />
+            </key>
+            <one-to-many class="caja.mapeo.entidades.DocPagoAnuladoDetalle" />
+        </set>
+        <set name="anioMesConceptos" table="AnioMesConcepto" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="IdConcepto" />
+            </key>
+            <one-to-many class="caja.mapeo.entidades.AnioMesConcepto" />
+        </set>
+        <set name="deudas" table="Deuda" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="IdConcepto" />
+            </key>
+            <one-to-many class="caja.mapeo.entidades.Deuda" />
+        </set>
+        <set name="eventoConceptoPagos" table="evento_concepto_pago" schema="cursos" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="id_concepto_pago" />
+            </key>
+            <one-to-many class="caja.mapeo.entidades.EventoConceptoPago" />
+        </set>
+    </class>
+</hibernate-mapping>

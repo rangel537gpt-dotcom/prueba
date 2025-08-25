@@ -1,0 +1,51 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 30/10/2019 08:16:38 AM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="caja.mapeo.entidades.Inversion" table="inversion" schema="cursos" catalog="Caja" optimistic-lock="version">
+        <id name="id" type="int">
+            <column name="id" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="evento" class="caja.mapeo.entidades.Evento" fetch="select">
+            <column name="id_evento" />
+        </many-to-one>
+        <many-to-one name="modalidadPago" class="caja.mapeo.entidades.ModalidadPago" fetch="select">
+            <column name="id_modalidad_pago" />
+        </many-to-one>
+        <many-to-one name="tipoParticipante" class="caja.mapeo.entidades.TipoParticipante" fetch="select">
+            <column name="id_tipo_participante" />
+        </many-to-one>
+        <property name="fechaInicio" type="date">
+            <column name="fecha_inicio" length="10" />
+        </property>
+        <property name="fechaFin" type="date">
+            <column name="fecha_fin" length="10" />
+        </property>
+        <property name="borrado" type="string">
+            <column name="borrado" length="1" />
+        </property>
+        <property name="monto" type="big_decimal">
+            <column name="monto" precision="12" scale="4" />
+        </property>
+        <set name="eventoConceptoPagos" table="evento_concepto_pago" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="id_inversion" />
+            </key>
+            <one-to-many class="caja.mapeo.entidades.EventoConceptoPago" />
+        </set>
+        <set name="participantes" table="participante" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="id_inversion" not-null="true" />
+            </key>
+            <one-to-many class="caja.mapeo.entidades.Participante" />
+        </set>
+        <set name="valeAcademicoConsumos" table="vale_academico_consumo" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="id_inversion" not-null="true" />
+            </key>
+            <one-to-many class="caja.mapeo.entidades.ValeAcademicoConsumo" />
+        </set>
+    </class>
+</hibernate-mapping>

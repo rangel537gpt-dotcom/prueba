@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 30/10/2019 08:16:38 AM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="caja.mapeo.entidades.Emailing" table="emailing" schema="cursos" catalog="Caja" optimistic-lock="version">
+        <id name="id" type="int">
+            <column name="id" />
+            <generator class="assigned" />
+        </id>
+        <many-to-one name="cliente" class="caja.mapeo.entidades.Cliente" fetch="select">
+            <column name="id_cliente" />
+        </many-to-one>
+        <property name="email" type="string">
+            <column name="email" length="60" />
+        </property>
+    </class>
+</hibernate-mapping>

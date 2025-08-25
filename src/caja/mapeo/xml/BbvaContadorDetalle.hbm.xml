@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 15/10/2016 10:02:39 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="caja.mapeo.entidades.BbvaContadorDetalle" table="BbvaContadorDetalle" schema="dbo" catalog="Caja" optimistic-lock="version">
+        <id name="id" type="int">
+            <column name="Id" />
+            <generator class="identity" />
+        </id>
+        <property name="idConcepto" type="java.lang.Integer">
+            <column name="IdConcepto" />
+        </property>
+        <property name="monto" type="java.lang.Double">
+            <column name="Monto" />
+        </property>
+        <property name="tipoConceptoAgrupar" type="string">
+            <column name="TipoConceptoAgrupar" length="50" />
+        </property>
+        <property name="identificacionPago" type="string">
+            <column name="IdentificacionPago" length="20" />
+        </property>
+        <property name="concepto" type="string">
+            <column name="Concepto" length="50" />
+        </property>
+        <property name="idAnioMesCuota" type="java.lang.Integer">
+            <column name="IdAnioMesCuota"/>
+        </property>
+        <property name="idFinanciamientoDetalle" type="java.lang.Integer">
+            <column name="IdFinanciamientoDetalle"/>
+        </property>
+        <property name="idReincorporacionDetalle" type="java.lang.Integer">
+            <column name="IdReincorporacionDetalle"/>
+        </property>
+        <property name="idDeudaDetalle" type="java.lang.Integer">
+            <column name="IdDeudaDetalle"/>
+        </property>
+        <property name="nroConcepto" type="java.lang.Integer">
+            <column name="NroConcepto"/>
+        </property>
+        <property name="idBbvaContador" type="java.lang.Integer">
+            <column name="IdBbvaContador"/>
+        </property>
+    </class>
+</hibernate-mapping>

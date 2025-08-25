@@ -1,0 +1,60 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 15/10/2016 10:02:39 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="caja.mapeo.entidades.CcmovcabExport" table="CCMOVCAB_EXPORT" schema="dbo" catalog="Caja" optimistic-lock="version">
+        <id name="id" type="int">
+            <column name="ID" />
+            <generator class="identity" />
+        </id>
+        <property name="caTipdoc" type="string">
+            <column name="CA_TIPDOC" length="50" />
+        </property>
+        <property name="caSerdoc" type="string">
+            <column name="CA_SERDOC" length="50" />
+        </property>
+        <property name="caNumdoc" type="string">
+            <column name="CA_NUMDOC" length="50" />
+        </property>
+        <property name="caFecemi" type="timestamp">
+            <column name="CA_FECEMI" length="23" />
+        </property>
+        <property name="caTipcli" type="string">
+            <column name="CA_TIPCLI" length="50" />
+        </property>
+        <property name="caCodcli" type="string">
+            <column name="CA_CODCLI" length="50" />
+        </property>
+        <property name="caNomcli" type="string">
+            <column name="CA_NOMCLI" length="50" />
+        </property>
+        <property name="caValvta" type="java.lang.Double">
+            <column name="CA_VALVTA" precision="53" scale="0" />
+        </property>
+        <property name="caDescto" type="java.lang.Double">
+            <column name="CA_DESCTO" precision="53" scale="0" />
+        </property>
+        <property name="caIgvvta" type="java.lang.Double">
+            <column name="CA_IGVVTA" precision="53" scale="0" />
+        </property>
+        <property name="caVvtame" type="java.lang.Double">
+            <column name="CA_VVTAME" precision="53" scale="0" />
+        </property>
+        <property name="caIgvme" type="java.lang.Double">
+            <column name="CA_IGVME" precision="53" scale="0" />
+        </property>
+        <property name="caCondic" type="java.lang.Short">
+            <column name="CA_CONDIC" />
+        </property>
+        <property name="caContab" type="java.lang.Boolean">
+            <column name="CA_CONTAB" />
+        </property>
+        <property name="caUsuari" type="string">
+            <column name="CA_USUARI" length="50" />
+        </property>
+        <property name="tipoDocPago" type="java.lang.Integer">
+            <column name="TIPO_DOC_PAGO" />
+        </property>
+    </class>
+</hibernate-mapping>

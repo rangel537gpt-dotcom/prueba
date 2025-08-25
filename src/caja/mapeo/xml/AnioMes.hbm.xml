@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 15/10/2016 10:02:39 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="caja.mapeo.entidades.AnioMes" table="AnioMes" schema="dbo" catalog="Caja" optimistic-lock="version">
+        <id name="id" type="int">
+            <column name="Id" />
+            <generator class="identity" />
+        </id>
+        <property name="anio" type="java.lang.Integer">
+            <column name="Anio" />
+        </property>
+        <property name="mes" type="java.lang.Integer">
+            <column name="Mes" />
+        </property>
+        <property name="nroOrden" type="java.lang.Integer">
+            <column name="NroOrden" unique="true" />
+        </property>
+        <property name="montoCuota" type="java.lang.Double">
+            <column name="MontoCuota" precision="53" scale="0" />
+        </property>
+        <property name="montoCuotaVitalicio" type="java.lang.Double">
+            <column name="MontoCuotaVitalicio" precision="53" scale="0" />
+        </property>
+        <property name="montoCuotaSocAqp" type="java.lang.Double">
+            <column name="MontoCuotaSocAqp" precision="53" scale="0" />
+        </property>
+        <property name="montoCuotaSocLim" type="java.lang.Double">
+            <column name="MontoCuotaSocLim" precision="53" scale="0" />
+        </property>
+        <set name="anioMesConceptos" table="AnioMesConcepto" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="IdAnioMes" />
+            </key>
+            <one-to-many class="caja.mapeo.entidades.AnioMesConcepto" />
+        </set>
+        <set name="cuotases" table="Cuotas" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="IdAnioMes" not-null="true" />
+            </key>
+            <one-to-many class="caja.mapeo.entidades.Cuotas" />
+        </set>
+    </class>
+</hibernate-mapping>

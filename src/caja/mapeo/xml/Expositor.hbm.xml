@@ -1,0 +1,51 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 30/10/2019 08:16:38 AM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="caja.mapeo.entidades.Expositor" table="expositor" schema="cursos" catalog="Caja" optimistic-lock="version">
+        <id name="id" type="int">
+            <column name="id" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="cliente" class="caja.mapeo.entidades.Cliente" fetch="select">
+            <column name="id_cliente" />
+        </many-to-one>
+        <property name="institucion" type="string">
+            <column name="institucion" length="150" />
+        </property>
+        <property name="nivelAcademico" type="string">
+            <column name="nivel_academico" length="50" />
+        </property>
+        <property name="nombreNivelAcademico" type="string">
+            <column name="nombre_nivel_academico" length="50" />
+        </property>
+        <property name="email" type="string">
+            <column name="email" length="60" />
+        </property>
+        <property name="urlFoto" type="string">
+            <column name="url_foto" length="250" />
+        </property>
+        <property name="frecuente" type="java.lang.Character">
+            <column name="frecuente" length="1" />
+        </property>
+        <property name="borrado" type="string">
+            <column name="borrado" length="1" />
+        </property>
+        <property name="curriculum" type="string">
+            <column name="curriculum" />
+        </property>
+        <set name="asignacionEventos" table="asignacion_evento" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="id_expositor" not-null="true" />
+            </key>
+            <one-to-many class="caja.mapeo.entidades.AsignacionEvento" />
+        </set>
+        <set name="curriculums" table="curriculum" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="id_expositor" />
+            </key>
+            <one-to-many class="caja.mapeo.entidades.Curriculum" />
+        </set>
+    </class>
+</hibernate-mapping>

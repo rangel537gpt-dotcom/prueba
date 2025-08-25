@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 15/10/2016 10:02:39 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="caja.mapeo.entidades.ClienteAuditorIndependiente" table="cliente_auditor_independiente"> 
+        <id name="id" type="int">
+            <column name="id" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="cliente" column="id_cliente" class="caja.mapeo.entidades.Cliente" fetch="select"/> 
+        <property name="fechaAfiliacion" column="fecha_afiliacion" type="date"/> 
+        <property name="fechaVigenciaDesde" column="fecha_vigencia_desde" type="date"/> 
+        <property name="fechaVigenciaHasta" column="fecha_vigencia_hasta" type="date"/> 
+        <property name="sector" column="sector" type="string"/> 
+        <property name="borrado" column="borrado" type="string"/> 
+    </class>
+</hibernate-mapping>

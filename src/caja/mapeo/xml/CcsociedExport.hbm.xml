@@ -1,0 +1,69 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 15/10/2016 10:02:39 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="caja.mapeo.entidades.CcsociedExport" table="CCSOCIED_EXPORT" schema="dbo" catalog="Caja" optimistic-lock="version">
+        <id name="id" type="int">
+            <column name="ID" />
+            <generator class="identity" />
+        </id>
+        <property name="asRuc" type="string">
+            <column name="AS_RUC" length="50" />
+        </property>
+        <property name="asMatric" type="string">
+            <column name="AS_MATRIC" length="50" />
+        </property>
+        <property name="asFecafi" type="timestamp">
+            <column name="AS_FECAFI" length="23" />
+        </property>
+        <property name="asNombre" type="string">
+            <column name="AS_NOMBRE" length="70" />
+        </property>
+        <property name="asDirecc" type="string">
+            <column name="AS_DIRECC" length="50" />
+        </property>
+        <property name="asCiudad" type="string">
+            <column name="AS_CIUDAD" length="50" />
+        </property>
+        <property name="asTelefo" type="string">
+            <column name="AS_TELEFO" length="50" />
+        </property>
+        <property name="asCondic" type="string">
+            <column name="AS_CONDIC" length="50" />
+        </property>
+        <property name="asCuota0" type="java.lang.Double">
+            <column name="AS_CUOTA0" precision="53" scale="0" />
+        </property>
+        <property name="asFecha0" type="timestamp">
+            <column name="AS_FECHA0" length="23" />
+        </property>
+        <property name="asCuota" type="java.lang.Double">
+            <column name="AS_CUOTA" precision="53" scale="0" />
+        </property>
+        <property name="asMesCo" type="java.lang.Short">
+            <column name="AS_MES_CO" />
+        </property>
+        <property name="asAnoCo" type="java.lang.Short">
+            <column name="AS_ANO_CO" />
+        </property>
+        <property name="asObsCo" type="string">
+            <column name="AS_OBS_CO" length="50" />
+        </property>
+        <property name="asEmail" type="string">
+            <column name="AS_EMAIL" length="50" />
+        </property>
+        <property name="asBorrad" type="java.lang.Boolean">
+            <column name="AS_BORRAD" />
+        </property>
+        <property name="asCobrad" type="string">
+            <column name="AS_COBRAD" length="50" />
+        </property>
+        <property name="asZongeo" type="string">
+            <column name="AS_ZONGEO" length="50" />
+        </property>
+        <property name="asCompag" type="java.lang.Boolean">
+            <column name="AS_COMPAG" />
+        </property>
+    </class>
+</hibernate-mapping>

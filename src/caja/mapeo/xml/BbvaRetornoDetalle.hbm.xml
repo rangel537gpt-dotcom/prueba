@@ -1,0 +1,57 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 15/10/2016 10:02:39 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="caja.mapeo.entidades.BbvaRetornoDetalle" table="BbvaRetornoDetalle" schema="dbo" catalog="Caja" optimistic-lock="version">
+        <id name="id" type="int">
+            <column name="Id" />
+            <generator class="identity" />
+        </id>
+        <property name="idBbvaRetorno" type="java.lang.Integer">
+            <column name="IdBbvaRetorno" />
+        </property>
+        <property name="nombre" type="string">
+            <column name="Nombre" length="50" />
+        </property>
+        <property name="referencia" type="string">
+            <column name="Referencia" length="50" />
+        </property>
+        <property name="tipoCobranza" type="string">
+            <column name="TipoCobranza" length="50" />
+        </property>
+        <property name="importeOrigen" type="java.lang.Double">
+            <column name="ImporteOrigen" />
+        </property>
+        <property name="importeMora" type="java.lang.Double">
+            <column name="ImporteMora" />
+        </property>
+        <property name="importeDeposito" type="java.lang.Double">
+            <column name="ImporteDeposito" />
+        </property>
+        <property name="fechaPago" type="date">
+            <column name="FechaPago" length="10" />
+        </property>
+        <property name="oficinaPago" type="java.lang.Integer">
+            <column name="OficinaPago"/>
+        </property>
+        <property name="nroMovimiento" type="java.lang.Integer">
+            <column name="NroMovimiento"/>
+        </property>
+        <property name="tipoValor" type="java.lang.Integer">
+            <column name="TipoValor"/>
+        </property>
+        <property name="canalEntrada" type="java.lang.Integer">
+            <column name="CanalEntrada"/>
+        </property>
+        <property name="idDocumentoPagoDetalle" type="java.lang.Integer">
+            <column name="IdDocumentoPagoDetalle"/>
+        </property>
+        <property name="idCliente" type="java.lang.Integer">
+            <column name="IdCliente" />
+        </property>
+        <property name="idAnioMes" type="java.lang.Integer">
+            <column name="IdAnioMes" />
+        </property>
+    </class>
+</hibernate-mapping>

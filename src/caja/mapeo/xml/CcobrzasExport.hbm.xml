@@ -1,0 +1,57 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 15/10/2016 10:02:39 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="caja.mapeo.entidades.CcobrzasExport" table="CCOBRZAS_EXPORT" schema="dbo" catalog="Caja" optimistic-lock="version">
+        <id name="id" type="int">
+            <column name="ID" />
+            <generator class="identity" />
+        </id>
+        <property name="coTipcli" type="string">
+            <column name="CO_TIPCLI" length="50" />
+        </property>
+        <property name="coCodcli" type="string">
+            <column name="CO_CODCLI" length="50" />
+        </property>
+        <property name="coMatric" type="string">
+            <column name="CO_MATRIC" length="50" />
+        </property>
+        <property name="coTipmov" type="string">
+            <column name="CO_TIPMOV" length="50" />
+        </property>
+        <property name="coTipdoc" type="string">
+            <column name="CO_TIPDOC" length="50" />
+        </property>
+        <property name="coSerdoc" type="string">
+            <column name="CO_SERDOC" length="50" />
+        </property>
+        <property name="coNumdoc" type="string">
+            <column name="CO_NUMDOC" length="50" />
+        </property>
+        <property name="coFecmov" type="timestamp">
+            <column name="CO_FECMOV" length="23" />
+        </property>
+        <property name="coImport" type="java.lang.Double">
+            <column name="CO_IMPORT" precision="53" scale="0" />
+        </property>
+        <property name="coDescto" type="java.lang.Double">
+            <column name="CO_DESCTO" precision="53" scale="0" />
+        </property>
+        <property name="coTipref" type="string">
+            <column name="CO_TIPREF" length="50" />
+        </property>
+        <property name="coSerref" type="string">
+            <column name="CO_SERREF" length="50" />
+        </property>
+        <property name="coNumref" type="string">
+            <column name="CO_NUMREF" length="50" />
+        </property>
+        <property name="coObserv" type="string">
+            <column name="CO_OBSERV" length="50" />
+        </property>
+        <property name="flag" type="java.lang.Boolean">
+            <column name="FLAG" />
+        </property>
+    </class>
+</hibernate-mapping>

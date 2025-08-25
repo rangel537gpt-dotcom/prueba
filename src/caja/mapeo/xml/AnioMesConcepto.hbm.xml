@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 15/10/2016 10:02:39 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="caja.mapeo.entidades.AnioMesConcepto" table="AnioMesConcepto" schema="dbo" catalog="Caja" optimistic-lock="version">
+        <id name="id" type="int">
+            <column name="Id" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="anioMes" class="caja.mapeo.entidades.AnioMes" fetch="select">
+            <column name="IdAnioMes" />
+        </many-to-one>
+        <many-to-one name="conceptoPagoDetalle" class="caja.mapeo.entidades.ConceptoPagoDetalle" fetch="select">
+            <column name="IdConcepto" />
+        </many-to-one>
+        <property name="monto" type="java.lang.Double">
+            <column name="Monto" precision="53" scale="0" />
+        </property>
+        <property name="montoSociedad" type="java.lang.Double">
+            <column name="monto_sociedad" precision="53" scale="0" />
+        </property>
+        <property name="esFinanciado" type="string">
+            <column name="EsFinanciado" length="1" />
+        </property>
+        <property name="esVitalicio" type="string">
+            <column name="es_vitalicio" length="1" />
+        </property>
+        <property name="tieneDescuento" type="string">
+            <column name="TieneDescuento" length="1" not-null="true" />
+        </property>
+        <property name="porcentajeDescuento" type="double">
+            <column name="PorcentajeDescuento" precision="53" scale="0" not-null="true" />
+        </property>
+    </class>
+</hibernate-mapping>

@@ -1,0 +1,48 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 15/10/2016 10:02:39 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="caja.mapeo.entidades.CcfinanExport" table="CCFINAN_EXPORT" schema="dbo" catalog="Caja" optimistic-lock="version">
+        <id name="id" type="int">
+            <column name="ID" />
+            <generator class="identity" />
+        </id>
+        <property name="matri" type="string">
+            <column name="MATRI" />
+        </property>
+        <property name="numer" type="string">
+            <column name="NUMER" />
+        </property>
+        <property name="tipop" type="string">
+            <column name="TIPOP" />
+        </property>
+        <property name="fepag" type="timestamp">
+            <column name="FEPAG" length="23" />
+        </property>
+        <property name="impag" type="java.lang.Double">
+            <column name="IMPAG" precision="53" scale="0" />
+        </property>
+        <property name="saldo" type="java.lang.Double">
+            <column name="SALDO" precision="53" scale="0" />
+        </property>
+        <property name="nctas" type="java.lang.Double">
+            <column name="NCTAS" precision="53" scale="0" />
+        </property>
+        <property name="cuota" type="java.lang.Double">
+            <column name="CUOTA" precision="53" scale="0" />
+        </property>
+        <property name="mesDesde" type="string">
+            <column name="MES_DESDE" />
+        </property>
+        <property name="anioDesde" type="java.lang.Double">
+            <column name="ANIO_DESDE" precision="53" scale="0" />
+        </property>
+        <property name="mesHasta" type="string">
+            <column name="MES_HASTA" />
+        </property>
+        <property name="anioHasta" type="java.lang.Double">
+            <column name="ANIO_HASTA" precision="53" scale="0" />
+        </property>
+    </class>
+</hibernate-mapping>

@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 30/10/2019 08:16:38 AM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="caja.mapeo.entidades.EventoAsignacionEventoParticipante" table="evento_asignacion_evento_participante" schema="cursos" catalog="Caja" optimistic-lock="version">
+        <id name="id" type="int">
+            <column name="id" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="evento" class="caja.mapeo.entidades.Evento" fetch="select">
+            <column name="id_evento" />
+        </many-to-one>
+        <many-to-one name="participante" class="caja.mapeo.entidades.Participante" fetch="select">
+            <column name="id_participante" />
+        </many-to-one>
+        <many-to-one name="asignacionEvento" class="caja.mapeo.entidades.AsignacionEvento" fetch="select">
+            <column name="id_asignacion_evento" />
+        </many-to-one>
+        <property name="nota" type="java.lang.Integer">
+            <column name="nota" />
+        </property>
+        <property name="borrado" type="string">
+            <column name="borrado" length="1" />
+        </property>
+    </class>
+</hibernate-mapping>

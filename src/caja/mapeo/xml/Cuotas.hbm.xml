@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 15/10/2016 10:02:39 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="caja.mapeo.entidades.Cuotas" table="Cuotas" schema="dbo" catalog="Caja" optimistic-lock="version">
+        <id name="id" type="int">
+            <column name="Id" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="anioMes" class="caja.mapeo.entidades.AnioMes" fetch="select">
+            <column name="IdAnioMes" not-null="true" />
+        </many-to-one>
+        <many-to-one name="cliente" class="caja.mapeo.entidades.Cliente" fetch="select">
+            <column name="IdCliente" not-null="true" />
+        </many-to-one>
+        <many-to-one name="conceptoPagoDetalle" class="caja.mapeo.entidades.ConceptoPagoDetalle" fetch="select">
+            <column name="IdConceptoPagoDetalle" />
+        </many-to-one>
+        <many-to-one name="documentoPagoDet" class="caja.mapeo.entidades.DocumentoPagoDet" fetch="select">
+            <column name="IdDocDet" />
+        </many-to-one>
+        <property name="monto" type="double">
+            <column name="Monto" precision="53" scale="0" not-null="true" />
+        </property>
+        <property name="estado" type="string">
+            <column name="Estado" length="1" />
+        </property>
+    </class>
+</hibernate-mapping>

@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 15/10/2016 10:02:39 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="caja.mapeo.entidades.FichaComite" table="ficha_comite" schema="ficha" catalog="Caja" optimistic-lock="version">
+        <id name="id" type="int" column="id">
+            <generator class="identity"/>
+        </id>
+        <many-to-one name="fichaDatos" column="id_ficha_datos" class="caja.mapeo.entidades.FichaDatos" not-null="false"/>
+        <property name="comite" column="comite"/>
+        <property name="borrado" column="borrado"/>
+    </class> 
+</hibernate-mapping>

@@ -1,0 +1,56 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 15/10/2016 10:02:39 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="caja.mapeo.entidades.FichaDatos" table="ficha_datos" schema="ficha" catalog="Caja" optimistic-lock="version">
+        <id name="id" type="int" column="id">
+            <generator class="identity"/>
+        </id>
+        <property name="nro" column="nro"/>
+        <property name="dni" column="dni"/>
+        <property name="ruc" column="ruc"/>
+        <property name="nacionalidad" column="nacionalidad"/>
+        <property name="apePat" column="ape_pat"/>
+        <property name="apeMat" column="ape_mat"/>
+        <property name="nombre" column="nombre"/>
+        <property name="email" column="email"/>
+        <property name="sexo" column="sexo"/>
+        <property name="telefonoFijo" column="telefono_fijo"/>
+        <property name="telefonoCelular" column="telefono_celular"/>
+        <property name="fechaNacimiento" column="fecha_nacimiento"/>
+        <property name="lugarNacimiento" column="lugar_nacimiento"/>
+        <property name="domicilio" column="domicilio"/>
+        <property name="direccionDepartamento" column="direccion_departamento"/>
+        <property name="direccionProvincia" column="direccion_provincia"/>
+        <property name="direccionDistrito" column="direccion_distrito"/>
+        <property name="centroTrabajo" column="centro_trabajo"/>
+        <property name="trabajoDepartamento" column="trabajo_departamento"/>
+        <property name="trabajoProvincia" column="trabajo_provincia"/>
+        <property name="trabajoDistrito" column="trabajo_distrito"/>
+        <property name="centroTrabajoDireccion" column="centro_trabajo_direccion"/>
+        <property name="procesado" column="procesado"/>
+        <property name="fechaDb" column="fecha_db"/>
+        <property name="telefonoCelular2" column="telefono_celular2"/>
+        <property name="paginaWeb" column="pagina_web"/>
+        <property name="borrado" column="borrado"/>
+        <property name="telefonoTrabajo" column="telefono_trabajo"/>
+        <property name="emailTrabajo" column="email_trabajo"/>
+        <property name="fechaOptoTituloContador" column="fecha_opto_titulo_contador"/>
+        <property name="idUniversidadEstudios" column="id_universidad_estudios"/>
+        <property name="idUniversidadTitulo" column="id_universidad_titulo"/>
+        <property name="modalidadObtencionTitulo" column="modalidad_obtencion_titulo"/>
+        <property name="fechaOptoGradoBachiller" column="fecha_opto_grado_bachiller"/>
+        <property name="estudiosEspecializacion" column="estudios_especializacion"/>
+        <property name="otrosEstudios" column="otros_estudios"/>
+        <property name="becasObtenidas" column="becas_obtenidas"/>
+        <property name="correspondenciaFisica" column="correspondencia_fisica"/>
+        <property name="lugarCobranza" column="lugar_cobranza"/>
+        <property name="temasGustariaRecibirCapacitacion" column="temas_gustaria_recibir_capacitacion"/>
+        <property name="comentarios" column="comentarios"/>
+        <property name="actividadesCulturales" column="actividades_culturales"/>
+        <property name="nombreConyugue" column="nombre_conyugue"/>
+        <property name="nombreHijos" column="nombre_hijos"/>
+        <property name="estadoCivil" column="estado_civil"/>
+    </class> 
+</hibernate-mapping>

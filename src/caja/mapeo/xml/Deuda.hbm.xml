@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 15/10/2016 10:02:39 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="caja.mapeo.entidades.Deuda" table="Deuda" schema="dbo" catalog="Caja" optimistic-lock="version">
+        <id name="id" type="int">
+            <column name="Id" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="cliente" class="caja.mapeo.entidades.Cliente" fetch="select">
+            <column name="IdCliente" />
+        </many-to-one>
+        <many-to-one name="conceptoPagoDetalle" class="caja.mapeo.entidades.ConceptoPagoDetalle" fetch="select">
+            <column name="IdConcepto" />
+        </many-to-one>
+        <many-to-one name="documentoPagoDet" class="caja.mapeo.entidades.DocumentoPagoDet" fetch="select">
+            <column name="IdDocPagDet" />
+        </many-to-one>
+        <property name="monto" type="java.lang.Double">
+            <column name="Monto" precision="53" scale="0" />
+        </property>
+        <property name="estado" type="string">
+            <column name="Estado" length="2" />
+        </property>
+        <property name="montoCancelado" type="java.lang.Double">
+            <column name="MontoCancelado" precision="53" scale="0" />
+        </property>
+        <property name="idFinanciamientoNuevo" type="java.lang.Integer">
+            <column name="IdFinanciamientoNuevo" />
+        </property>
+        <property name="sePuedeFinanciar" type="string">
+            <column name="SePuedeFinanciar" length="1" />
+        </property>
+    </class>
+</hibernate-mapping>

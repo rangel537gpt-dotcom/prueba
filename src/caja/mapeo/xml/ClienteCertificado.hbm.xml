@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 15/10/2016 10:02:39 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="caja.mapeo.entidades.ClienteCertificado" table="ClienteCertificado" schema="dbo" catalog="Caja" optimistic-lock="version">
+        <id name="id" type="int">
+            <column name="Id" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="cliente" class="caja.mapeo.entidades.Cliente" fetch="select">
+            <column name="IdCliente" not-null="true" unique="true" />
+        </many-to-one>
+        <property name="tipo" type="string">
+            <column name="Tipo" length="10" />
+        </property>
+        <property name="desde" type="date">
+            <column name="Desde" length="10" not-null="true" />
+        </property>
+        <property name="hasta" type="date">
+            <column name="Hasta" length="10" not-null="true" />
+        </property>
+    </class>
+</hibernate-mapping>

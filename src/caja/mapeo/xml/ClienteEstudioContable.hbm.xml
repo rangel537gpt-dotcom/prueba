@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 15/10/2016 10:02:39 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="caja.mapeo.entidades.ClienteEstudioContable" table="cliente_estudio_contable"> 
+        <id name="id" type="int">
+            <column name="id" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="clienteTitular" column="id_cliente_titular" class="caja.mapeo.entidades.Cliente" fetch="select"/> 
+        <many-to-one name="cliente" column="id_cliente" class="caja.mapeo.entidades.Cliente" fetch="select"/> 
+        <property name="ruc" column="ruc" length="11"/> 
+        <property name="razonSocial" column="razon_social" length="500"/> 
+        <property name="direccion" column="direccion" length="500"/> 
+        <property name="email" column="email" length="30"/> 
+        <property name="paginaWeb" column="pagina_web" length="30"/> 
+        <property name="especialidades" column="especialidades" length="1000"/> 
+        <property name="telefonos" column="telefonos" length="50"/> 
+        <property name="nroLicenciaFuncionamiento" column="nro_licencia_funcionamiento"  length="50"/> 
+        <property name="fechaInicioActividades" column="fecha_inicio_actividades" type="date"/> 
+        <property name="nroTrabajadores" column="nro_trabajadores"/> 
+        <property name="fechaEmpadronamiento" column="fecha_empadronamiento" type="date"/>
+        <property name="borrado" type="string">
+            <column name="borrado" length="1" />
+        </property>
+    </class>
+</hibernate-mapping>

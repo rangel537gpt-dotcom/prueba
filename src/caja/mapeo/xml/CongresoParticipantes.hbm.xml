@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 15/10/2016 10:02:39 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="caja.mapeo.entidades.CongresoParticipantes" table="CongresoParticipantes" schema="dbo" catalog="Caja" optimistic-lock="version">
+        <id name="id" type="int">
+            <column name="Id" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="congreso" class="caja.mapeo.entidades.Congreso" fetch="select">
+            <column name="IdCongreso" />
+        </many-to-one>
+        <many-to-one name="cliente" class="caja.mapeo.entidades.Cliente" fetch="select">
+            <column name="IdCliente" />
+        </many-to-one>
+        <many-to-one name="documentoPagoDet" class="caja.mapeo.entidades.DocumentoPagoDet" fetch="select">
+            <column name="IdDocumentoPagoDet" />
+        </many-to-one>
+        <many-to-one name="tipoDocIdentidad" class="caja.mapeo.entidades.TipoDocIdentidad" fetch="select">
+            <column name="IdTipoDocIdentidad" />
+        </many-to-one>
+        <property name="apePat" type="string">
+            <column name="ApePat" length="100" />
+        </property>
+        <property name="apeMat" type="string">
+            <column name="ApeMat" length="100" />
+        </property>
+        <property name="nombres" type="string">
+            <column name="Nombres" length="100" />
+        </property>
+        <property name="entregoMaterial" type="string">
+            <column name="EntregoMaterial" length="1" />
+        </property>
+        <property name="tipoParticipante" type="java.lang.Integer">
+            <column name="TipoParticipante" />
+        </property>
+        <property name="nroDocIdentidad" type="string">
+            <column name="NroDocIdentidad" length="50" />
+        </property>
+    </class>
+</hibernate-mapping>

@@ -1,0 +1,48 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 15/10/2016 10:02:39 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="caja.mapeo.entidades.Gastos" table="Gastos" schema="dbo" catalog="Caja" optimistic-lock="version">
+        <id name="idGastos" type="int">
+            <column name="IdGastos" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="cliente" class="caja.mapeo.entidades.Cliente" fetch="select">
+            <column name="IdCliente" not-null="true" />
+        </many-to-one>
+        <many-to-one name="tipoDocPago" class="caja.mapeo.entidades.TipoDocPago" fetch="select">
+            <column name="IdTipoDocPago" not-null="true" />
+        </many-to-one>
+        <property name="documentoGastos" type="string">
+            <column name="DocumentoGastos" length="11" />
+        </property>
+        <property name="nroSerie" type="java.lang.Integer">
+            <column name="NroSerie" />
+        </property>
+        <property name="nroDocumentoGasto" type="java.lang.Integer">
+            <column name="NroDocumentoGasto" />
+        </property>
+        <property name="tipoPagoGastos" type="string">
+            <column name="TipoPagoGastos" length="10" />
+        </property>
+        <property name="fechaGasto" type="date">
+            <column name="FechaGasto" length="10" not-null="true" />
+        </property>
+        <property name="estado" type="string">
+            <column name="Estado" length="50" />
+        </property>
+        <property name="fechaEmision" type="date">
+            <column name="FechaEmision" length="10" not-null="true" />
+        </property>
+        <property name="fechaLiquidAnterior" type="date">
+            <column name="FechaLiquidAnterior" length="10" not-null="true" />
+        </property>
+        <set name="gastoDetalles" table="GastoDetalle" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="IdGastos" not-null="true" />
+            </key>
+            <one-to-many class="caja.mapeo.entidades.GastoDetalle" />
+        </set>
+    </class>
+</hibernate-mapping>

@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 30/10/2019 08:16:38 AM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="caja.mapeo.entidades.ConstanciaHabilitacion" table="constancia_habilitacion" schema="dbo" catalog="Caja" optimistic-lock="version">
+        <id name="id" type="int">
+            <column name="id" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="cliente" class="caja.mapeo.entidades.Cliente" fetch="select">
+            <column name="id_cliente" />
+        </many-to-one>
+        <many-to-one name="documentoPagoDet" class="caja.mapeo.entidades.DocumentoPagoDet" fetch="select">
+            <column name="id_documento_pago_det" />
+        </many-to-one>
+        <property name="nro" type="int">
+            <column name="nro" />
+        </property>
+        <property name="fecha" type="date">
+            <column name="fecha" length="10" not-null="true" />
+        </property>
+        <property name="fechaVigencia" type="date">
+            <column name="fecha_vigencia" length="10" not-null="true" />
+        </property>
+        <property name="origenGeneracion" type="string">
+            <column name="origen_generacion" />
+        </property>
+        <property name="certificacion" type="string">
+            <column name="certificacion" length="1" />
+        </property>
+        <property name="borrado" type="string">
+            <column name="borrado" length="1" />
+        </property>
+        <property name="tipo" type="string">
+            <column name="tipo" length="1" />
+        </property>
+    </class>
+</hibernate-mapping>

@@ -1,0 +1,105 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 15/10/2016 10:02:39 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="caja.mapeo.entidades.DocumentoPago" table="DocumentoPago" schema="dbo" catalog="Caja" optimistic-lock="version">
+        <id name="idDocumentoPago" type="int">
+            <column name="IdDocumentoPago" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="clienteByIdContadorEmpresa" class="caja.mapeo.entidades.Cliente" fetch="select">
+            <column name="IdContadorEmpresa" />
+        </many-to-one>
+        <many-to-one name="cliente" class="caja.mapeo.entidades.Cliente" fetch="select">
+            <column name="IdCliente" />
+        </many-to-one>
+        <many-to-one name="cobrador" class="caja.mapeo.entidades.Cobrador" fetch="select">
+            <column name="IdCobrador" />
+        </many-to-one>
+        <many-to-one name="tipoDocSerie" class="caja.mapeo.entidades.TipoDocSerie" fetch="select">
+            <column name="IdTipoPagoSerie" />
+        </many-to-one>
+        <property name="nombreCliente" type="string">
+            <column name="NombreCliente" length="300" />
+        </property>
+        <property name="electronico" type="string">
+            <column name="Electronico" length="1" />
+        </property>
+        <property name="fechaPago" type="date">
+            <column name="FechaPago" length="10" not-null="true" />
+        </property>
+        <property name="estado" type="string">
+            <column name="Estado" length="50" />
+        </property>
+        <property name="codigoMedioPago" type="string">
+            <column name="codigo_medio_pago" length="10" />
+        </property>
+        <property name="codigoUbigeo" type="string">
+            <column name="codigo_ubigeo" length="10" />
+        </property>
+        <property name="tieneDetraccion" type="string">
+            <column name="tiene_detraccion" length="1" />
+        </property>
+        <property name="nroDocumentoPago" type="java.lang.Integer">
+            <column name="NroDocumentoPago" />
+        </property>
+        <property name="conceptoPago" type="string">
+            <column name="ConceptoPago" length="500" />
+        </property>
+        <property name="observacion" type="string">
+            <column name="Observacion" length="120" />
+        </property>
+        <property name="nroSerie" type="string">
+            <column name="NroSerie" length="4" />
+        </property>
+        <property name="correlativoAnulacion" type="java.lang.Integer">
+            <column name="CorrelativoAnulacion" />
+        </property>
+        <property name="idTipoDocPago" type="int">
+            <column name="IdTipoDocPago" not-null="true" />
+        </property>
+        <property name="tieneIgv" type="string">
+            <column name="TieneIGV" length="1" />
+        </property>
+        <property name="moneda" type="string">
+            <column name="Moneda" length="1" />
+        </property>
+        <property name="motivoAnulacion" type="string">
+            <column name="MotivoAnulacion" length="100" />
+        </property>
+        <property name="tipoPago" type="string">
+            <column name="TipoPago" length="3" />
+        </property>
+        <property name="nroOperacion" type="string">
+            <column name="NroOperacion" length="50" />
+        </property>
+        <property name="fechaOperacion" type="date">
+            <column name="FechaOperacion" length="10" />
+        </property>
+        <property name="fechaSunat" type="timestamp">
+            <column name="FechaSunat" length="29" />
+        </property>
+        <property name="fechaAnulacion" type="timestamp">
+            <column name="FechaAnulacion" length="29" />
+        </property>
+        <property name="formaPagoSunat" type="string">
+            <column name="forma_pago_sunat" length="7" />
+        </property>
+        <property name="fechaVencimientoSunat" type="date">
+            <column name="Fecha_vencimiento_sunat" length="10" not-null="true" />
+        </property>
+        <set name="documentoPagoDets" table="DocumentoPagoDet" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="IdDocumentoPago" not-null="true" />
+            </key>
+            <one-to-many class="caja.mapeo.entidades.DocumentoPagoDet" />
+        </set>
+        <set name="operacions" table="Operacion" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="IdDocumentoPago" not-null="true" />
+            </key>
+            <one-to-many class="caja.mapeo.entidades.Operacion" />
+        </set>
+    </class>
+</hibernate-mapping>

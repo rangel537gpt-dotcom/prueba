@@ -1,0 +1,180 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 15/10/2016 10:02:39 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="caja.mapeo.entidades.ColegiadosExport" table="COLEGIADOS_EXPORT" schema="dbo" catalog="Caja" optimistic-lock="version">
+        <id name="id" type="int">
+            <column name="ID" />
+            <generator class="identity" />
+        </id>
+        <property name="expr1000" type="java.lang.Integer">
+            <column name="Expr1000" />
+        </property>
+        <property name="asDni" type="string">
+            <column name="AS_DNI" length="50" />
+        </property>
+        <property name="asCodigo" type="string">
+            <column name="AS_CODIGO" length="50" />
+        </property>
+        <property name="asMatric" type="string">
+            <column name="AS_MATRIC" length="50" />
+        </property>
+        <property name="asPassw" type="string">
+            <column name="AS_PASSW" length="50" />
+        </property>
+        <property name="asFecafi" type="timestamp">
+            <column name="AS_FECAFI" length="23" />
+        </property>
+        <property name="asApelli" type="string">
+            <column name="AS_APELLI" length="50" />
+        </property>
+        <property name="asNombre" type="string">
+            <column name="AS_NOMBRE" length="50" />
+        </property>
+        <property name="asDirecc" type="string">
+            <column name="AS_DIRECC" length="50" />
+        </property>
+        <property name="domDpto" type="string">
+            <column name="DOM_DPTO" length="50" />
+        </property>
+        <property name="domProv" type="string">
+            <column name="DOM_PROV" length="50" />
+        </property>
+        <property name="domDist" type="string">
+            <column name="DOM_DIST" length="50" />
+        </property>
+        <property name="domLoca" type="string">
+            <column name="DOM_LOCA" length="50" />
+        </property>
+        <property name="asTrabaj" type="string">
+            <column name="AS_TRABAJ" length="50" />
+        </property>
+        <property name="asDirtra" type="string">
+            <column name="AS_DIRTRA" length="50" />
+        </property>
+        <property name="traDpto" type="string">
+            <column name="TRA_DPTO" length="50" />
+        </property>
+        <property name="traProv" type="string">
+            <column name="TRA_PROV" length="50" />
+        </property>
+        <property name="traDist" type="string">
+            <column name="TRA_DIST" length="50" />
+        </property>
+        <property name="traLoca" type="string">
+            <column name="TRA_LOCA" length="50" />
+        </property>
+        <property name="asTelefo" type="string">
+            <column name="AS_TELEFO" length="50" />
+        </property>
+        <property name="asTelcel" type="string">
+            <column name="AS_TELCEL" length="50" />
+        </property>
+        <property name="asTeltra" type="string">
+            <column name="AS_TELTRA" length="50" />
+        </property>
+        <property name="asCondic" type="string">
+            <column name="AS_CONDIC" length="50" />
+        </property>
+        <property name="asCuota0" type="java.lang.Double">
+            <column name="AS_CUOTA0" precision="53" scale="0" />
+        </property>
+        <property name="asFecha0" type="timestamp">
+            <column name="AS_FECHA0" length="23" />
+        </property>
+        <property name="asCuota" type="java.lang.Double">
+            <column name="AS_CUOTA" precision="53" scale="0" />
+        </property>
+        <property name="asMesCo" type="java.lang.Short">
+            <column name="AS_MES_CO" />
+        </property>
+        <property name="asAnoCo" type="java.lang.Short">
+            <column name="AS_ANO_CO" />
+        </property>
+        <property name="asObsCo" type="string">
+            <column name="AS_OBS_CO" length="50" />
+        </property>
+        <property name="asFondo0" type="java.lang.Double">
+            <column name="AS_FONDO0" precision="53" scale="0" />
+        </property>
+        <property name="asFechf0" type="timestamp">
+            <column name="AS_FECHF0" length="23" />
+        </property>
+        <property name="asFondo1" type="java.lang.Double">
+            <column name="AS_FONDO1" precision="53" scale="0" />
+        </property>
+        <property name="asMesFo" type="java.lang.Short">
+            <column name="AS_MES_FO" />
+        </property>
+        <property name="asAnoFo" type="java.lang.Short">
+            <column name="AS_ANO_FO" />
+        </property>
+        <property name="asFondo" type="java.lang.Boolean">
+            <column name="AS_FONDO" />
+        </property>
+        <property name="asFecnac" type="timestamp">
+            <column name="AS_FECNAC" length="23" />
+        </property>
+        <property name="asSexo" type="string">
+            <column name="AS_SEXO" length="50" />
+        </property>
+        <property name="asUniver" type="string">
+            <column name="AS_UNIVER" length="50" />
+        </property>
+        <property name="asEmail" type="string">
+            <column name="AS_EMAIL" length="50" />
+        </property>
+        <property name="asEmail1" type="string">
+            <column name="AS_EMAIL1" length="50" />
+        </property>
+        <property name="asBorrad" type="java.lang.Boolean">
+            <column name="AS_BORRAD" />
+        </property>
+        <property name="asCobrad" type="string">
+            <column name="AS_COBRAD" length="50" />
+        </property>
+        <property name="cobraen" type="string">
+            <column name="COBRAEN" length="50" />
+        </property>
+        <property name="asZongeo" type="string">
+            <column name="AS_ZONGEO" length="50" />
+        </property>
+        <property name="asZoncou" type="string">
+            <column name="AS_ZONCOU" length="50" />
+        </property>
+        <property name="asBuzon" type="string">
+            <column name="AS_BUZON" length="50" />
+        </property>
+        <property name="asCompag" type="java.lang.Boolean">
+            <column name="AS_COMPAG" />
+        </property>
+        <property name="publicar" type="string">
+            <column name="PUBLICAR" length="50" />
+        </property>
+        <property name="certificad" type="string">
+            <column name="CERTIFICAD" length="50" />
+        </property>
+        <property name="vencert" type="timestamp">
+            <column name="VENCERT" length="23" />
+        </property>
+        <property name="mfdo2007" type="java.lang.Short">
+            <column name="MFDO2007" />
+        </property>
+        <property name="afdo2007" type="java.lang.Short">
+            <column name="AFDO2007" />
+        </property>
+        <property name="mfdoclub" type="java.lang.Short">
+            <column name="MFDOCLUB" />
+        </property>
+        <property name="afdoclub" type="java.lang.Short">
+            <column name="AFDOCLUB" />
+        </property>
+        <property name="nrocert" type="string">
+            <column name="NROCERT" length="50" />
+        </property>
+        <property name="fedebaja" type="timestamp">
+            <column name="FEDEBAJA" length="23" />
+        </property>
+    </class>
+</hibernate-mapping>

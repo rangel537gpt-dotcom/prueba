@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 15/10/2016 10:02:39 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="caja.mapeo.entidades.ClienteEstudioContableEspecialidad" table="cliente_estudio_contable_especialidad"> 
+        <id name="id" type="int">
+            <column name="id" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="clienteEstudioContable" column="id_cliente_estudio_contable" class="caja.mapeo.entidades.ClienteEstudioContable"/> 
+        <many-to-one name="curriculumTablaEspecialidades" column="id_curriculum_tabla_especialidades" class="caja.mapeo.entidades.CurriculumTablaEspecialidades"/>
+        <property name="borrado" column="borrado" length="1"/>
+    </class>
+</hibernate-mapping>
